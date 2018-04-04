@@ -68,14 +68,18 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        appUpData();
+//        appUpData();
 //        Confirmlogin();
 
 //        firstStart();
+
+        init();
+    }
+
+    private void init() {
         initView();
         mRadioGroup.check(R.id.rb_base);
         mRadioGroup.setOnCheckedChangeListener(this);
-
     }
 
     private void appUpData() {
@@ -94,17 +98,17 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                 });
 
         try {
-           // 0代表相等，1代表version1大于version2，-1代表version1小于version2
+            // 0代表相等，1代表version1大于version2，-1代表version1小于version2
             switch (compareVersion(getVersionName(), versionMax)) {
                 case 0://过
-                    Toast.makeText(this,"不需要更新",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "不需要更新", Toast.LENGTH_SHORT).show();
                     break;
                 case 1://不会出现
                     break;
                 case -1://提示更新
-                    switch (compareVersion(getVersionName(), versionMin)){
+                    switch (compareVersion(getVersionName(), versionMin)) {
                         case 0://强制更新
-                            Toast.makeText(this,"强制更新",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, "强制更新", Toast.LENGTH_SHORT).show();
                             break;
                         case 1://需要更新
 //                                    AllenVersionChecker
@@ -113,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
 //                                                    UIData.create().setDownloadUrl(downloadUrl)
 //                                            )
 //                                            .excuteMission(context);
-                            Toast.makeText(this,"需要更新",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, "需要更新", Toast.LENGTH_SHORT).show();
                             break;
                         case -1://不会出现
                             break;
@@ -127,7 +131,6 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         } catch (Exception e) {
             e.printStackTrace();
         }
-
 
 
     }
