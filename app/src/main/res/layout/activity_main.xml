@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.edz.myapplication.activity.MainActivity">
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+    </FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/colorGray"/>
+    <RadioGroup
+        android:id="@+id/mRadioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@color/colorWhite">
+
+        <RadioButton
+            android:id="@+id/rb_base"
+            android:text="基地"
+            android:drawableTop="@drawable/selected_base"
+            style="@style/RadioGroupButtonStyle"
+            android:textColor="@drawable/color_radiobutton"/>
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@color/colorGray"/>
+
+        <RadioButton
+            android:id="@+id/rb_my"
+            android:text="我的"
+            android:textColor="@drawable/color_radiobutton"
+            android:drawableTop="@drawable/selected_mine"
+            style="@style/RadioGroupButtonStyle" />
+    </RadioGroup>
+</LinearLayout>

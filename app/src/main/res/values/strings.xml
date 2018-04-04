@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">City</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="account_setting">账户设置</string>
+    <string name="account_number">当前账号</string>
+    <string name="Log_out">退出登陆</string>
+    <string name="Log_start">开始CITY生活</string>
+    <string name="Log_in">登录</string>
+    <string name="hint_phonenumber">请输入手机号</string>
+    <string name="SMSVerification_code">短信验证码</string>
+    <string name="Verification_code">获取验证码</string>
+    <string name="User_agreement">我已阅读并同意《用户服务协议》</string>
+
+</resources>
