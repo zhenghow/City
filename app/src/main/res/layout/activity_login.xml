@@ -4,31 +4,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/icon_login_background"
+    android:orientation="vertical"
     tools:context="com.example.edz.myapplication.activity.LoginActivity">
 
     <LinearLayout
         android:id="@+id/back_login"
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/icon_back"
             android:layout_gravity="center"
-            android:layout_marginLeft="20dp"/>
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/icon_back" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/Log_in"
-            android:textColor="@color/colorWhite"
             android:layout_gravity="center"
-            android:layout_marginLeft="8dp"/>
+            android:layout_marginLeft="8dp"
+            android:text="@string/Log_in"
+            android:textColor="@color/colorWhite" />
     </LinearLayout>
+
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/icon_logo"
+        android:layout_gravity="center"
+        android:layout_marginTop="60dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -47,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="+86"
-                android:textColor="@color/colorWhite"/>
+                android:textColor="@color/colorWhite" />
 
             <View
                 android:layout_width="1dp"
@@ -61,14 +71,14 @@
                 android:id="@+id/edit_phoneNB"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:background="@null"
                 android:hint="@string/hint_phonenumber"
                 android:inputType="phone"
                 android:maxLength="13"
-                android:textSize="12sp"
+                android:textColor="@color/colorWhite"
                 android:textColorHint="@color/colorWhite"
                 android:textCursorDrawable="@null"
-                android:textColor="@color/colorWhite"
-                android:background="@null"/>
+                android:textSize="12sp" />
         </LinearLayout>
 
         <View
@@ -86,15 +96,15 @@
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
+                android:background="@null"
                 android:hint="@string/SMSVerification_code"
-                android:textSize="12sp"
                 android:maxLength="6"
+                android:textColor="@color/colorWhite"
                 android:textColorHint="@color/colorWhite"
                 android:textCursorDrawable="@null"
-                android:textColor="@color/colorWhite"
-                android:background="@null"/>
-                <!--android:digits="qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM"-->
-                />
+                android:textSize="12sp" />
+            <!--android:digits="qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM"-->
+            />
 
             <TextView
                 android:id="@+id/text_smscode"
@@ -102,7 +112,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="@string/Verification_code"
-                android:textColor="@color/colorWhite"/>
+                android:textColor="@color/colorWhite" />
 
         </LinearLayout>
 
@@ -119,8 +129,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-      >
+        android:paddingRight="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -131,7 +140,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="邀请码"
-                android:textColor="@color/colorWhite"/>
+                android:textColor="@color/colorWhite" />
 
             <EditText
                 android:id="@+id/edit_invitecode"
@@ -139,15 +148,17 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
-                android:textColorHint="@color/colorWhite"
-                android:textCursorDrawable="@null"
+                android:background="@null"
                 android:textColor="@color/colorWhite"
-                android:background="@null"/>
+                android:textColorHint="@color/colorWhite"
+                android:textCursorDrawable="@null" />
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/colorWhite" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -157,35 +168,49 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="昵称"
-                android:textColor="@color/colorWhite"/>
+                android:textColor="@color/colorWhite" />
 
             <EditText
                 android:id="@+id/edit_nickname"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
-                android:layout_weight="1"
                 android:layout_marginLeft="10dp"
-                android:textCursorDrawable="@null"
+                android:layout_weight="1"
+                android:background="@null"
                 android:textColor="@color/colorWhite"
-                android:background="@null"/>
+                android:textCursorDrawable="@null" />
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/colorWhite" />
     </LinearLayout>
 
-
-    <RadioButton
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:checked="true"
-        android:text="@string/User_agreement"
-        android:textColor="@color/colorWhite"
-        android:button="@drawable/radio"
-        android:paddingLeft="8dp"
-        android:layout_marginTop="10dp"/>
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="10dp">
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:button="@drawable/radio"
+            android:checked="true"
+            android:textColor="@color/colorWhite" />
+
+        <TextView
+            android:id="@+id/text_protocol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/User_agreement"
+            android:textColor="@color/colorWhite"
+            android:layout_marginLeft="8dp"/>
+    </LinearLayout>
+
 
     <Button
         android:id="@+id/button_login"
@@ -194,7 +219,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
+        android:background="@drawable/background_login_btn"
         android:text="@string/Log_start"
-        android:textColor="@color/colorWhite"
-      android:background="@drawable/background_login_btn"/>
+        android:textColor="@color/colorWhite" />
 </LinearLayout>

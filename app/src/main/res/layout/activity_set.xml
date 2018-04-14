@@ -27,11 +27,10 @@
             android:layout_height="wrap_content"
             android:text="@string/account_setting"
             android:layout_gravity="center"/>
-        <View
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_gravity="bottom"
-            android:background="@color/colorGray"/>
+            android:layout_height="1dp"
+            android:background="@drawable/line_blank"/>
     </FrameLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -56,10 +55,10 @@
                 android:layout_gravity="center"
                 android:layout_marginRight="20dp"/>
         </LinearLayout>
-        <View
+        <ImageView
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/colorBlack"
+            android:background="@drawable/line_blank"
             android:layout_marginLeft="20dp"/>
     </LinearLayout>
     <LinearLayout
@@ -84,10 +83,10 @@
                 android:layout_gravity="center"
                 android:layout_marginRight="20dp"/>
         </LinearLayout>
-        <View
+        <ImageView
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/colorBlack"
+            android:background="@drawable/line_blank"
             android:layout_marginLeft="20dp"/>
     </LinearLayout>
     <LinearLayout
@@ -112,13 +111,14 @@
                 android:layout_gravity="center"
                 android:layout_marginRight="20dp"/>
         </LinearLayout>
-        <View
+        <ImageView
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/colorBlack"
+            android:background="@drawable/line_blank"
             android:layout_marginLeft="20dp"/>
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/layout_tell_setting"
         android:layout_width="match_parent"
         android:layout_height="51dp"
         android:orientation="vertical">
@@ -131,19 +131,20 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_gravity="center"
-                android:text="联系我们"
+                android:text="City社区QQ群"
                 android:layout_marginLeft="20dp"/>
             <TextView
                 android:id="@+id/text_telephone_setting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginRight="20dp"/>
+                android:layout_marginRight="20dp"
+                android:text="395640"/>
         </LinearLayout>
-        <View
+        <ImageView
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/colorBlack"
+            android:background="@drawable/line_blank"
             android:layout_marginLeft="20dp"/>
     </LinearLayout>
     <LinearLayout
@@ -168,10 +169,10 @@
                 android:layout_gravity="center"
                 android:layout_marginRight="20dp"/>
         </LinearLayout>
-        <View
+        <ImageView
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/colorBlack" />
+            android:background="@drawable/line_blank"/>
     </LinearLayout>
     <Button
         android:id="@+id/bt_logOut"

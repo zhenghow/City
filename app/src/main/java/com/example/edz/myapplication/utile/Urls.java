@@ -22,5 +22,6 @@ public class Urls {
     public static final String Url_web = URL + "/h5/";
     public static final String Url_webBase = Url_web + "base?";
     public static final String Url_webHome = Url_web + "home?";
+    public static final String Url_webProtocol = Url_web + "protocol";
 
 }

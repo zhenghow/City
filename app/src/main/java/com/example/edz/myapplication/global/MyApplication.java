@@ -2,7 +2,6 @@ package com.example.edz.myapplication.global;
 
 import android.app.Application;
 import android.content.Context;
-
 import com.lzy.okgo.OkGo;
 
 /**
@@ -20,6 +19,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+//        LeakCanary.install(this);
         initOkGo();
     }
 

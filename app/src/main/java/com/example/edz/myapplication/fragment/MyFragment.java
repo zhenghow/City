@@ -49,31 +49,6 @@ public class MyFragment extends Fragment {
     FrameLayout loadingLayout;
     @Bind(R.id.button_reload)
     Button buttonReload;
-    private WebSettings webSettings;
-    private Activity context;
-    private String userId;
-
-    private Handler mhandler = new Handler() {
-        @Override
-        public void handleMessage(Message message) {
-            switch (message.what) {
-                case 1: {
-                    webViewGoBack();
-                }
-                break;
-            }
-        }
-    };
-
-    private void webViewGoBack() {
-        webHome.goBack();
-    }
-
-    public MyFragment(Activity context) {
-        // Required empty public constructor
-        this.context = context;
-    }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -86,15 +61,16 @@ public class MyFragment extends Fragment {
     }
 
     private void initView() {
-        WebViewUtil webViewUtil=new WebViewUtil();
-        webViewUtil.init(webHome,loadingLayout,webError);
 
+        WebViewUtil webViewUtil = new WebViewUtil(getActivity());
         //调用JS
         webHome.addJavascriptInterface(new JsHelper(getActivity()), "hello");
 
+        webViewUtil.init(webHome, loadingLayout, webError);
+
         SharedPreferencesHelper sharedPreferencesHelper = new SharedPreferencesHelper(getActivity(), "loginToken");
         String token = sharedPreferencesHelper.getString("token", null);
-        Log.e(TAG, "token: " + token);
+
         //加载URL
         webHome.loadUrl(Urls.Url_webHome + "token=" + token);
     }
@@ -105,41 +81,17 @@ public class MyFragment extends Fragment {
         ButterKnife.unbind(this);
     }
 
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        LoadData();
-    }
-
-    public void LoadData() {
-        //指定操作的文件名称
-        SharedPreferences share = getActivity().getSharedPreferences("loginToken", MODE_PRIVATE);
-        userId = share.getString("token", null);
-
-    }
-
-    /**
-     * 显示自定义错误提示页面，用一个View覆盖在WebView
-     */
-    private void showErrorPage() {
-        webHome.setVisibility(View.GONE);
-        webError.setVisibility(View.VISIBLE);
-    }
-
     @OnClick({R.id.img_set, R.id.button_reload})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_set:
-                Intent intent = new Intent(context, SetActivity.class);
-                context.startActivity(intent);
+                Intent intent = new Intent(getActivity(), SetActivity.class);
+                intent.putExtra("type", "1");
+                getActivity().startActivity(intent);
                 break;
             case R.id.button_reload:
                 initView();
-                loadingLayout.setVisibility(View.VISIBLE);
                 webError.setVisibility(View.GONE);
-
-
                 break;
         }
     }

@@ -1,6 +1,10 @@
 package com.example.edz.myapplication.fragment;
 
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -9,8 +13,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -45,13 +52,8 @@ public class BaseFragment extends Fragment {
 
     }
 
-
-
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_base, container, false);
         ButterKnife.bind(this, view);
         initView();
@@ -59,40 +61,27 @@ public class BaseFragment extends Fragment {
     }
 
     private void initView() {
-        WebViewUtil webViewUtil = new WebViewUtil();
-        webViewUtil.init(webView, loadingLayout, webError);
+        WebSettings webSettings = webView.getSettings();
+        WebViewUtil webViewUtil = new WebViewUtil(getActivity());
+        webView.setBackgroundColor(0);
         //调用JS
         webView.addJavascriptInterface(new JsHelper(getActivity()), "hello");
 
+        webViewUtil.init(webView, loadingLayout, webError);
+        //设置缓存
+        webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
+
         SharedPreferencesHelper sharedPreferencesHelper = new SharedPreferencesHelper(getActivity(), "loginToken");
         String token = sharedPreferencesHelper.getString("token", null);
-        Log.e(TAG, "token: " + token);
+
         //加载URL
         webView.loadUrl(Urls.Url_webBase + "token=" + token);
-//        webView.loadUrl("file:///android_asset/javascript.html");
-//        webView.loadUrl("javascript:android(true)");
-
-
     }
-
-
-//    @Override
-//    public void onHiddenChanged(boolean hidden) {
-//        super.onHiddenChanged(hidden);
-//        SharedPreferences share = getActivity().getSharedPreferences("loginToken", MODE_PRIVATE);
-//        String token = share.getString("token", null);
-//        if (hidden) {
-//
-//        } else {
-//            webView.loadUrl(Urls.Url_webBase + "token=" + token);
-//        }
-//    }
 
 
     @Override
     public void onResume() {
         super.onResume();
-        initView();
     }
 
     @Override
@@ -101,11 +90,9 @@ public class BaseFragment extends Fragment {
         ButterKnife.unbind(this);
     }
 
-
     @OnClick(R.id.button_reload)
     public void onViewClicked() {
         initView();
-        loadingLayout.setVisibility(View.VISIBLE);
         webError.setVisibility(View.GONE);
     }
 }

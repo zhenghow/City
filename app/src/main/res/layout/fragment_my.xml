@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -6,6 +6,12 @@
     tools:context="com.example.edz.myapplication.fragment.MyFragment">
 
     <!-- TODO: Update blank fragment layout -->
+    <WebView
+        android:id="@+id/web_home"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"></WebView>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -39,7 +45,8 @@
         android:id="@+id/loadingLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
         <FrameLayout
             android:layout_width="60dp"
             android:layout_height="60dp"
@@ -54,12 +61,7 @@
 
     </FrameLayout>
 
-    <WebView
-        android:id="@+id/web_home"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:visibility="gone"></WebView>
+
 
 
 
@@ -109,4 +111,4 @@
     </LinearLayout>
 
 
-</LinearLayout>
+</FrameLayout>

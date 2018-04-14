@@ -11,11 +11,14 @@ import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.edz.myapplication.R;
 import com.example.edz.myapplication.utile.JsHelper;
+import com.example.edz.myapplication.utile.WebViewUtil;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -30,18 +33,13 @@ public class WebActivity extends AppCompatActivity {
     FrameLayout imgFinish;
     @Bind(R.id.text_webtitle)
     TextView textWebtitle;
+    @Bind(R.id.loadingLayout)
+    FrameLayout loadingLayout;
+    @Bind(R.id.button_reload)
+    Button buttonReload;
+    @Bind(R.id.web_error)
+    LinearLayout webError;
 
-    private Handler mhandler = new Handler() {
-        @Override
-        public void handleMessage(Message message) {
-            switch (message.what) {
-                case 1: {
-                    webViewGoBack();
-                }
-                break;
-            }
-        }
-    };
     private String url;
     private String title;
 
@@ -65,32 +63,13 @@ public class WebActivity extends AppCompatActivity {
     private void initWeb() {
         textWebtitle.setText(title);
 
+        WebViewUtil webViewUtil = new WebViewUtil(this);
+        webViewUtil.init(webView, loadingLayout, webError);
 
-        //支持App内部JavaScript交互
-        webView.getSettings().setJavaScriptEnabled(true);
-        //自适应屏幕
-        webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        //屏幕回退
-        webView.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
-                if ((keyCode == KeyEvent.KEYCODE_BACK) && webView.canGoBack()) {
-                    mhandler.sendEmptyMessage(1);
-                    return true;
-                }
-                return false;
-            }
-        });
-        //禁止调用外部浏览器
-        webView.setWebViewClient(new WebViewClient());
         //调用JS
         webView.addJavascriptInterface(new JsHelper(this), "hello");
         //加载URL
         webView.loadUrl(url);
-    }
-
-    private void webViewGoBack() {
-        webView.goBack();
     }
 
     @OnClick(R.id.img_finish)
