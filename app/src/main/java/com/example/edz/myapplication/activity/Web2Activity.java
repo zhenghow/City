@@ -79,4 +79,10 @@ public class Web2Activity extends AppCompatActivity {
                 break;
         }
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initWeb();
+    }
 }

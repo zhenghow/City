@@ -1,33 +1,22 @@
 package com.example.edz.myapplication.fragment;
 
-
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebResourceError;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-
 import com.example.edz.myapplication.R;
 import com.example.edz.myapplication.utile.JsHelper;
 import com.example.edz.myapplication.utile.SharedPreferencesHelper;
 import com.example.edz.myapplication.utile.Urls;
 import com.example.edz.myapplication.utile.WebViewUtil;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -57,6 +46,7 @@ public class BaseFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_base, container, false);
         ButterKnife.bind(this, view);
         initView();
+
         return view;
     }
 
@@ -68,11 +58,12 @@ public class BaseFragment extends Fragment {
         webView.addJavascriptInterface(new JsHelper(getActivity()), "hello");
 
         webViewUtil.init(webView, loadingLayout, webError);
-        //设置缓存
-        webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
 
         SharedPreferencesHelper sharedPreferencesHelper = new SharedPreferencesHelper(getActivity(), "loginToken");
         String token = sharedPreferencesHelper.getString("token", null);
+        Log.i(TAG, "token: ==");
+        //设置缓存
+        webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
 
         //加载URL
         webView.loadUrl(Urls.Url_webBase + "token=" + token);

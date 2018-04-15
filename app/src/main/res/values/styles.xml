@@ -4,8 +4,8 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <!--<item name="colorPrimary">@color/colorPrimary</item>-->
-        <item name="colorPrimaryDark">@color/game_details_rb_normal</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimaryDark">@color/colorBlack</item>
+        <item name="colorAccent">@color/color_text_selected_Violet</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -44,7 +44,7 @@
 
 
     <style name="StartTheme" parent="AppTheme">
-        <item name="android:windowBackground">@drawable/start_bg</item>
+        <item name="android:windowBackground">@drawable/load</item>
         <item name="windowActionBar">false</item>//取消Actionbar
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>//设置全屏

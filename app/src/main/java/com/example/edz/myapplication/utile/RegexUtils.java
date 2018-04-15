@@ -1,5 +1,7 @@
 package com.example.edz.myapplication.utile;
 
+import java.util.regex.Pattern;
+
 /**
  * 正则表达式
  * Created by EDZ on 2018/3/29.

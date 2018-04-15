@@ -78,4 +78,10 @@ public class WebThirdActivity extends AppCompatActivity {
                 break;
         }
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initWeb();
+    }
 }

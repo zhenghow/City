@@ -109,10 +109,14 @@ public class LoginActivity extends AppCompatActivity {
 //        }
 //    };
 
-    @OnClick({R.id.text_smscode, R.id.button_login, R.id.text_protocol})
+    @OnClick({R.id.back_login, R.id.text_smscode, R.id.button_login, R.id.text_protocol})
     public void onViewClicked(View view) {
 
         switch (view.getId()) {
+            case R.id.back_login:
+                finish();
+                break;
+
             case R.id.text_smscode:
                 geteditData();
                 if (RegexUtils.isMobilePhoneNumber(phoneNB)) {

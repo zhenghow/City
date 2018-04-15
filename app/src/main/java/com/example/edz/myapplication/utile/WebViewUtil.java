@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AlertDialog;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -39,15 +40,34 @@ public class WebViewUtil {
 
 
     public static void init(final WebView webView, final FrameLayout loadingLayout, final LinearLayout webError) {
+        //屏蔽长按事件
+        webView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return true;
+            }
+        });
+        webView.setHorizontalScrollBarEnabled(false);//水平不显示
+        webView.setVerticalScrollBarEnabled(false); //垂直不显示
 
         WebSettings webSettings = webView.getSettings();
         //支持App内部JavaScript交互
         webSettings.setJavaScriptEnabled(true);
+        //隐藏webview缩放按钮
+        webSettings.setDisplayZoomControls(false);
+        // 设置可以支持缩放
+        webSettings.setSupportZoom(false);
+        // 为图片添加放大缩小功能
+        webSettings.setUseWideViewPort(false);
         //自适应屏幕
-        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
         webSettings.setUseWideViewPort(true); //将图片调整到适合webview的大小
+        webSettings.setLoadWithOverviewMode(true);
 
-//        webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+
+//设置缓存
+        webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+
 
         //屏幕回退
         webView.setOnKeyListener(new View.OnKeyListener() {
@@ -157,7 +177,6 @@ public class WebViewUtil {
                 b.create().show();
                 return true;
             }
-
 
 
             @Override

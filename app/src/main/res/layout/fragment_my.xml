@@ -6,37 +6,42 @@
     tools:context="com.example.edz.myapplication.fragment.MyFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <WebView
-        android:id="@+id/web_home"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"></WebView>
-
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/bg_base_itle">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="基地"
-            android:textColor="@color/colorWhite" />
-
+        android:layout_height="match_parent">
+        <WebView
+            android:id="@+id/web_home"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"></WebView>
 
         <FrameLayout
-            android:id="@+id/img_set"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="right">
-            <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/icon_bar">
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="@drawable/icon_settings" />
-        </FrameLayout>
+                android:text="基地"
+                android:textColor="@color/colorWhite" />
 
+
+            <FrameLayout
+                android:id="@+id/img_set"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="right">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/icon_settings" />
+            </FrameLayout>
+
+
+        </FrameLayout>
 
     </FrameLayout>
 

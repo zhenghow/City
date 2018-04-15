@@ -76,4 +76,10 @@ public class WebActivity extends AppCompatActivity {
     public void onViewClicked() {
         finish();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initWeb();
+    }
 }

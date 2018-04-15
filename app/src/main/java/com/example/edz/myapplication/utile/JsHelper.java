@@ -69,11 +69,13 @@ public class JsHelper {
     }
 
     @JavascriptInterface
-    public static void onClickCopy(String code) {
+    public static void onClickCopy(String code,String name) {
         ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
         //创建ClipData对象
-        ClipData clipData = ClipData.newPlainText("邀请码", code);
+        ClipData clipData = ClipData.newPlainText("邀请码", "我是"+name+",邀请您加入City寻宝，邀请码："+code+"，我的邀请次数有限，赶快加入哦～ http://140.143.53.254/cityChain.apk");
         //添加ClipData对象到剪切板中
+//        我是多多，邀请您加入City寻宝，邀请码：GNEJ，我的邀请次数有限，赶快加入哦～ http://140.143.53.254/cityChain.apk
+
         clipboardManager.setPrimaryClip(clipData);
         Toast.makeText(context, "复制成功", Toast.LENGTH_SHORT).show();
     }

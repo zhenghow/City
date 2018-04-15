@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/icon_login_background"
+    android:background="@drawable/icon_login"
     android:orientation="vertical"
     tools:context="com.example.edz.myapplication.activity.LoginActivity">
 
@@ -31,19 +31,17 @@
             android:textColor="@color/colorWhite" />
     </LinearLayout>
 
-
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/icon_logo"
-        android:layout_gravity="center"
-        android:layout_marginTop="60dp"/>
+<ImageView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/icon_logo"
+    android:layout_gravity="center"
+    android:layout_marginTop="50dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="35dp"
         android:orientation="vertical"
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
@@ -74,11 +72,11 @@
                 android:background="@null"
                 android:hint="@string/hint_phonenumber"
                 android:inputType="phone"
-                android:maxLength="13"
+                android:maxLength="11"
                 android:textColor="@color/colorWhite"
                 android:textColorHint="@color/colorWhite"
-                android:textCursorDrawable="@null"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:textCursorDrawable="@drawable/shape_et_cursor"/>
         </LinearLayout>
 
         <View
@@ -101,7 +99,8 @@
                 android:maxLength="6"
                 android:textColor="@color/colorWhite"
                 android:textColorHint="@color/colorWhite"
-                android:textCursorDrawable="@null"
+
+                android:textCursorDrawable="@drawable/shape_et_cursor"
                 android:textSize="12sp" />
             <!--android:digits="qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM"-->
             />
@@ -149,9 +148,10 @@
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:background="@null"
+                android:maxLength="4"
+                android:textCursorDrawable="@drawable/shape_et_cursor"
                 android:textColor="@color/colorWhite"
-                android:textColorHint="@color/colorWhite"
-                android:textCursorDrawable="@null" />
+                android:textColorHint="@color/colorWhite" />
         </LinearLayout>
 
         <View
@@ -177,8 +177,9 @@
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:background="@null"
-                android:textColor="@color/colorWhite"
-                android:textCursorDrawable="@null" />
+                android:maxLength="10"
+                android:textCursorDrawable="@drawable/shape_et_cursor"
+                android:textColor="@color/colorWhite"/>
         </LinearLayout>
 
         <View

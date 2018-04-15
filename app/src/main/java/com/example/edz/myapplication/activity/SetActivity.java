@@ -2,19 +2,19 @@ package com.example.edz.myapplication.activity;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.edz.myapplication.R;
 import com.example.edz.myapplication.bean.SettingBean;
@@ -46,11 +46,14 @@ public class SetActivity extends AppCompatActivity {
     TextView textIdcardSetting;
     @Bind(R.id.text_telephone_setting)
     TextView textTelephoneSetting;
+    @Bind(R.id.layout_tell_setting)
+    LinearLayout layoutTellSetting;
 
     private String token;
     private SettingBean settingBean;
     private SettingBean.ObjectBean objectBean;
     private String telephone;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +73,18 @@ public class SetActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        layoutTellSetting.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                ClipboardManager clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                //创建ClipData对象
+                ClipData clipData = ClipData.newPlainText("City社区QQ群", "395640");
+                //添加ClipData对象到剪切板中
+                clipboardManager.setPrimaryClip(clipData);
+                Toast.makeText(SetActivity.this, "复制成功", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
     }
 
     private void initData() {
@@ -99,7 +114,7 @@ public class SetActivity extends AppCompatActivity {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        telephone="";
+                        telephone = "";
                         textMobileSetting.setText(null);
                         textNameSetting.setText(null);
                         textIdcardSetting.setText(null);
@@ -116,7 +131,7 @@ public class SetActivity extends AppCompatActivity {
         return version;
     }
 
-    @OnClick({R.id.img_finish, R.id.bt_logOut,R.id.layout_tell_setting})
+    @OnClick({R.id.img_finish, R.id.bt_logOut, R.id.layout_tell_setting})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_finish:
@@ -129,12 +144,24 @@ public class SetActivity extends AppCompatActivity {
 //                break;
 
             case R.id.bt_logOut:
-                Intent intent = new Intent(this, LoginActivity.class);
-                intent.putExtra("type","1");
+
+                SharedPreferences userInfo = getSharedPreferences("loginToken", MODE_PRIVATE);
+                SharedPreferences.Editor editor = userInfo.edit();//获取Editor //得到Editor后，写入需要保存的数据
+               editor.putString("token", "");
+               editor.commit();//提交修改
+             Log.i(TAG, "保存用户信息成功");
+
+
+               Intent intent = new Intent(this, LoginActivity.class);
+                intent.putExtra("type", "1");
                 startActivity(intent);
+
+
+
                 finish();
                 break;
 
         }
     }
+
 }

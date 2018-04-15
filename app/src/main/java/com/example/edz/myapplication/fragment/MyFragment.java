@@ -95,4 +95,10 @@ public class MyFragment extends Fragment {
                 break;
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initView();
+    }
 }
