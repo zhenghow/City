@@ -7,9 +7,11 @@ package com.example.edz.myapplication.utile;
 public class Urls {
 
 //    public static final String  URL="http://citychain.niwoa.com";
+
 //    public static final String URL = "http://192.168.0.105";
 //    public static final String URL = "http://192.168.0.106";
     public static final String URL = "http://140.143.53.254";
+
 
     //android
     public static final String URL_User = URL + "/user/";

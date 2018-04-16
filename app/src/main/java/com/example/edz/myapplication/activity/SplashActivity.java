@@ -1,21 +1,19 @@
 package com.example.edz.myapplication.activity;
 
+
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +29,8 @@ import com.example.edz.myapplication.utile.BitmapHelper;
 import com.example.edz.myapplication.utile.SharedPreferencesHelper;
 import com.example.edz.myapplication.utile.Urls;
 import com.google.gson.Gson;
+import com.umeng.analytics.AnalyticsConfig;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -68,9 +68,13 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
 
+        MobclickAgent.enableEncrypt(true);
+
+
         if (isNetworkAvailable(this)) {
             appUpData();
         }
+
 
     }
 
@@ -98,6 +102,7 @@ public class SplashActivity extends AppCompatActivity {
                                         initView();
                                         break;
                                     case 1://不会出现
+                                        initView();
                                         break;
                                     case -1://提示更新
                                         switch (compareVersion(getVersionName(), versionMin)) {
@@ -204,6 +209,7 @@ public class SplashActivity extends AppCompatActivity {
 
         mhandler.sendEmptyMessage(1);
     }
+
     /**
      * 检查网络是否可用
      *
@@ -228,6 +234,7 @@ public class SplashActivity extends AppCompatActivity {
 
         return true;
     }
+
     /**
      * 禁用返回键
      *
@@ -310,9 +317,9 @@ public class SplashActivity extends AppCompatActivity {
      */
     private UIData crateUIData() {
         UIData uiData = UIData.create();
-        uiData.setTitle(getString(R.string.update_title));
-        uiData.setDownloadUrl("http://test-1251233192.coscd.myqcloud.com/1_1.apk");
-        uiData.setContent(getString(R.string.updatecontent));
+        uiData.setTitle("版本更新");
+        uiData.setDownloadUrl("http://140.143.53.254/cityChain.apk");
+        uiData.setContent("1.修改了一些已知Bug");
         return uiData;
     }
 
@@ -330,4 +337,16 @@ public class SplashActivity extends AppCompatActivity {
 //            return baseDialog;
 //        };
 //    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
 }

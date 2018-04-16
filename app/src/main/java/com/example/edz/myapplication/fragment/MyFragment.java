@@ -90,8 +90,10 @@ public class MyFragment extends Fragment {
                 getActivity().startActivity(intent);
                 break;
             case R.id.button_reload:
-                initView();
+                Log.i(TAG, "onViewClicked: web_error");
                 webError.setVisibility(View.GONE);
+                initView();
+                webHome.setVisibility(View.VISIBLE);
                 break;
         }
     }

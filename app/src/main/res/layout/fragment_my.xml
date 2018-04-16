@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/colorWhite"
     tools:context="com.example.edz.myapplication.fragment.MyFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -24,7 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="基地"
+                android:text="家园"
                 android:textColor="@color/colorWhite" />
 
 

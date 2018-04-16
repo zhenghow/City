@@ -2,15 +2,10 @@ package com.example.edz.myapplication.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -19,6 +14,7 @@ import android.widget.TextView;
 import com.example.edz.myapplication.R;
 import com.example.edz.myapplication.utile.JsHelper;
 import com.example.edz.myapplication.utile.WebViewUtil;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -68,18 +64,39 @@ public class WebActivity extends AppCompatActivity {
 
         //调用JS
         webView.addJavascriptInterface(new JsHelper(this), "hello");
+
         //加载URL
         webView.loadUrl(url);
     }
 
-    @OnClick(R.id.img_finish)
-    public void onViewClicked() {
-        finish();
+
+    @OnClick({R.id.img_finish, R.id.button_reload})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.img_finish:
+                finish();
+                break;
+            case R.id.button_reload:
+                Log.i(TAG, "onViewClicked: web_error");
+                initWeb();
+                webError.setVisibility(View.GONE);
+                webView.setVisibility(View.VISIBLE);
+                break;
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         initWeb();
+        MobclickAgent.onResume(this);
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
+
 }

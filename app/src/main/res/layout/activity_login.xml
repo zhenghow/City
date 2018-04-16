@@ -8,35 +8,14 @@
     android:orientation="vertical"
     tools:context="com.example.edz.myapplication.activity.LoginActivity">
 
-    <LinearLayout
-        android:id="@+id/back_login"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:visibility="gone">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="20dp"
-            android:background="@drawable/icon_back" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="8dp"
-            android:text="@string/Log_in"
-            android:textColor="@color/colorWhite" />
-    </LinearLayout>
-
-<ImageView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="@drawable/icon_logo"
-    android:layout_gravity="center"
-    android:layout_marginTop="50dp"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/icon_logo" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -75,8 +54,8 @@
                 android:maxLength="11"
                 android:textColor="@color/colorWhite"
                 android:textColorHint="@color/colorWhite"
-                android:textSize="12sp"
-                android:textCursorDrawable="@drawable/shape_et_cursor"/>
+                android:textCursorDrawable="@drawable/shape_et_cursor"
+                android:textSize="12sp" />
         </LinearLayout>
 
         <View
@@ -130,57 +109,38 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
 
-        <LinearLayout
+
+        <EditText
+            android:id="@+id/edit_invitecode"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="50dp"
+            android:background="@null"
+            android:hint="请输入邀请码"
+            android:maxLength="4"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorWhite"
+            android:textCursorDrawable="@drawable/shape_et_cursor"
+            android:textSize="12sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="邀请码"
-                android:textColor="@color/colorWhite" />
-
-            <EditText
-                android:id="@+id/edit_invitecode"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="1"
-                android:background="@null"
-                android:maxLength="4"
-                android:textCursorDrawable="@drawable/shape_et_cursor"
-                android:textColor="@color/colorWhite"
-                android:textColorHint="@color/colorWhite" />
-        </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/colorWhite" />
 
-        <LinearLayout
+
+        <EditText
+            android:id="@+id/edit_nickname"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="50dp"
+            android:background="@null"
+            android:hint="请输入昵称，不能超过10个字符"
+            android:maxLength="10"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorWhite"
+            android:textCursorDrawable="@drawable/shape_et_cursor"
+            android:textSize="12sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="昵称"
-                android:textColor="@color/colorWhite" />
-
-            <EditText
-                android:id="@+id/edit_nickname"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="1"
-                android:background="@null"
-                android:maxLength="10"
-                android:textCursorDrawable="@drawable/shape_et_cursor"
-                android:textColor="@color/colorWhite"/>
-        </LinearLayout>
 
         <View
             android:layout_width="match_parent"
@@ -191,9 +151,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
         android:gravity="center_vertical"
-        android:layout_marginTop="10dp">
+        android:orientation="horizontal">
+
         <CheckBox
             android:id="@+id/checkBox"
             android:layout_width="wrap_content"
@@ -207,9 +168,9 @@
             android:id="@+id/text_protocol"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
             android:text="@string/User_agreement"
-            android:textColor="@color/colorWhite"
-            android:layout_marginLeft="8dp"/>
+            android:textColor="@color/colorWhite" />
     </LinearLayout>
 
 

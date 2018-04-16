@@ -24,6 +24,7 @@ import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -144,18 +145,18 @@ public class SetActivity extends AppCompatActivity {
 //                break;
 
             case R.id.bt_logOut:
-
+                MobclickAgent.onProfileSignOff();
                 SharedPreferences userInfo = getSharedPreferences("loginToken", MODE_PRIVATE);
                 SharedPreferences.Editor editor = userInfo.edit();//获取Editor //得到Editor后，写入需要保存的数据
-               editor.putString("token", "");
-               editor.commit();//提交修改
-             Log.i(TAG, "保存用户信息成功");
+                editor.remove("token");
+//                editor.putString("token", "");
+                editor.commit();//提交修改
+                Log.i(TAG, "保存用户信息成功");
 
 
-               Intent intent = new Intent(this, LoginActivity.class);
+                Intent intent = new Intent(this, LoginActivity.class);
                 intent.putExtra("type", "1");
                 startActivity(intent);
-
 
 
                 finish();
@@ -164,4 +165,15 @@ public class SetActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
 }

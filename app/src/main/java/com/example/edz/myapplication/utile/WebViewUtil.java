@@ -60,26 +60,27 @@ public class WebViewUtil {
         // 为图片添加放大缩小功能
         webSettings.setUseWideViewPort(false);
         //自适应屏幕
-        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
+        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN );
         webSettings.setUseWideViewPort(true); //将图片调整到适合webview的大小
         webSettings.setLoadWithOverviewMode(true);
+        webSettings.setTextZoom(100);
 
 
-//设置缓存
+        //设置缓存
         webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
 
 
         //屏幕回退
-        webView.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
-                if ((keyCode == KeyEvent.KEYCODE_BACK) && webView.canGoBack()) {
-                    webView.goBack();
-                    return true;
-                }
-                return false;
-            }
-        });
+//        webView.setOnKeyListener(new View.OnKeyListener() {
+//            @Override
+//            public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
+//                if ((keyCode == KeyEvent.KEYCODE_BACK) && webView.canGoBack()) {
+//                    webView.goBack();
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
 
 
         webView.setWebViewClient(new WebViewClient() {
@@ -104,7 +105,7 @@ public class WebViewUtil {
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
                 super.onReceivedError(view, errorCode, description, failingUrl); //6.0以下执行
 //                Log.i(TAG, "onReceivedError: ------->errorCode" + errorCode + ":" + description); //网络未连接
-//                view.loadUrl("about:blank");// 避免出现默认的错误界面
+                view.loadUrl("about:blank");// 避免出现默认的错误界面
 
 
                 webView.setVisibility(View.GONE);
@@ -116,7 +117,7 @@ public class WebViewUtil {
             @Override
             public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
                 super.onReceivedError(view, request, error);
-//                view.loadUrl("about:blank");// 避免出现默认的错误界面
+                view.loadUrl("about:blank");// 避免出现默认的错误界面
 
                 webView.setVisibility(View.GONE);
                 webError.setVisibility(View.VISIBLE);
@@ -198,7 +199,7 @@ public class WebViewUtil {
                 // android 6.0 以下通过title获取
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
                     if (title.contains("404") || title.contains("500") || title.contains("Error")) {
-//                        view.loadUrl("about:blank");// 避免出现默认的错误界面
+                        view.loadUrl("about:blank");// 避免出现默认的错误界面
                         webView.setVisibility(View.GONE);
                         webError.setVisibility(View.VISIBLE);
                     }

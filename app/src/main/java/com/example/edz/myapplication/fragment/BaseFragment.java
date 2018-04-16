@@ -12,11 +12,14 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+
 import com.example.edz.myapplication.R;
 import com.example.edz.myapplication.utile.JsHelper;
 import com.example.edz.myapplication.utile.SharedPreferencesHelper;
 import com.example.edz.myapplication.utile.Urls;
 import com.example.edz.myapplication.utile.WebViewUtil;
+import com.umeng.analytics.MobclickAgent;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -61,18 +64,20 @@ public class BaseFragment extends Fragment {
 
         SharedPreferencesHelper sharedPreferencesHelper = new SharedPreferencesHelper(getActivity(), "loginToken");
         String token = sharedPreferencesHelper.getString("token", null);
-        Log.i(TAG, "token: ==");
+        Log.i(TAG, "token: ==" + token);
         //设置缓存
         webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
-
+        String url = Urls.Url_webBase + "token=" + token;
+        Log.i(TAG, "url: "+url);
         //加载URL
-        webView.loadUrl(Urls.Url_webBase + "token=" + token);
+        webView.loadUrl(url);
     }
 
 
     @Override
     public void onResume() {
         super.onResume();
+        MobclickAgent.onPageStart(TAG);
     }
 
     @Override
@@ -83,7 +88,15 @@ public class BaseFragment extends Fragment {
 
     @OnClick(R.id.button_reload)
     public void onViewClicked() {
-        initView();
+        Log.i(TAG, "onViewClicked: web_error");
         webError.setVisibility(View.GONE);
+        initView();
+        webView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG);
     }
 }

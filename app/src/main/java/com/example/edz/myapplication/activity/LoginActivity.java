@@ -1,6 +1,7 @@
 package com.example.edz.myapplication.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -22,6 +23,7 @@ import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -43,8 +45,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText editInvitecode;
     @Bind(R.id.edit_nickname)
     EditText editNickname;
-    @Bind(R.id.back_login)
-    LinearLayout backLogin;
+
     @Bind(R.id.text_protocol)
     TextView textProtocol;
     @Bind(R.id.checkBox)
@@ -71,16 +72,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        Intent intent = getIntent();
-        String type = intent.getStringExtra("type");
-        switch (type) {
-            case "0"://欢迎页
-                backLogin.setVisibility(View.GONE);
-                break;
-            case "1"://setting页
-                backLogin.setVisibility(View.VISIBLE);
-                break;
-        }
         layoutRegister.setVisibility(View.GONE);
         sharedPreferencesHelper = new SharedPreferencesHelper(LoginActivity.this, "loginToken");
     }
@@ -109,17 +100,14 @@ public class LoginActivity extends AppCompatActivity {
 //        }
 //    };
 
-    @OnClick({R.id.back_login, R.id.text_smscode, R.id.button_login, R.id.text_protocol})
+    @OnClick({ R.id.text_smscode, R.id.button_login, R.id.text_protocol})
     public void onViewClicked(View view) {
 
         switch (view.getId()) {
-            case R.id.back_login:
-                finish();
-                break;
 
             case R.id.text_smscode:
                 geteditData();
-                if (RegexUtils.isMobilePhoneNumber(phoneNB)) {
+                if (RegexUtils.isMobile(phoneNB)) {
                     mCountDownTimerUtils = new CountDownTimerUtils(textsmsCode, 60000, 1000);
                     Log.e(TAG, "smscode: ");
                     OkGo.<String>post(Urls.Url_smscode).tag(this)
@@ -155,49 +143,54 @@ public class LoginActivity extends AppCompatActivity {
                     if (url == null) {
                         Toast.makeText(LoginActivity.this, "请完成所有输入再登录", Toast.LENGTH_SHORT).show();
                     } else {
-                        switch (num) {
-                            case 0:
-                                Log.e(TAG, "phoneNB:== " + phoneNB + "&&&&&verification===" + verification
-                                        + "%%%%%inviteCode==" + inviteCode + "&&&&&&&nickname==" + nickname);
-                                if (phoneNB.equals("") || verification.equals("") || inviteCode.equals("") || nickname.equals("")) {
-                                    Toast.makeText(this, "请完成所有输入再登录", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    OkGo.<String>post(url).tag(this)
-                                            .params("mobile", phoneNB)
-                                            .params("smsCode", verification)
-                                            .params("inviteCode", inviteCode)
-                                            .params("nickname", nickname)
-                                            .execute(new StringCallback() {
-                                                @Override
-                                                public void onSuccess(Response<String> response) {
-                                                    gson = new Gson();
-                                                    baseBean = gson.fromJson(response.body(), BaseBean.class);
-                                                    selectionState(baseBean.getCode());
-                                                }
-                                            });
-                                }
+                        if(RegexUtils.strRealLength(nickname)){
+                            switch (num) {
+                                case 0:
+                                    Log.e(TAG, "phoneNB:== " + phoneNB + "&&&&&verification===" + verification
+                                            + "%%%%%inviteCode==" + inviteCode + "&&&&&&&nickname==" + nickname);
+                                    if (phoneNB.equals("") || verification.equals("") || inviteCode.equals("") || nickname.equals("")) {
+                                        Toast.makeText(this, "请完成所有输入再登录", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        OkGo.<String>post(url).tag(this)
+                                                .params("mobile", phoneNB)
+                                                .params("smsCode", verification)
+                                                .params("inviteCode", inviteCode)
+                                                .params("nickname", nickname)
+                                                .execute(new StringCallback() {
+                                                    @Override
+                                                    public void onSuccess(Response<String> response) {
+                                                        gson = new Gson();
+                                                        baseBean = gson.fromJson(response.body(), BaseBean.class);
+                                                        selectionState(baseBean.getCode());
+                                                    }
+                                                });
+                                    }
 
-                                break;
-                            case 1:
-                                Log.e(TAG, "phoneNB:== " + phoneNB + "&&&&&verification===" + verification);
-                                if (phoneNB.equals("") || verification.equals("")) {
-                                    Toast.makeText(this, "请完成所有输入再登录", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    OkGo.<String>post(url).tag(this)
-                                            .params("mobile", phoneNB)
-                                            .params("smsCode", verification)
-                                            .execute(new StringCallback() {
-                                                @Override
-                                                public void onSuccess(Response<String> response) {
-                                                    gson = new Gson();
-                                                    baseBean = gson.fromJson(response.body(), BaseBean.class);
-                                                    selectionState(baseBean.getCode());
-                                                }
-                                            });
-                                }
+                                    break;
+                                case 1:
+                                    Log.e(TAG, "phoneNB:== " + phoneNB + "&&&&&verification===" + verification);
+                                    if (phoneNB.equals("") || verification.equals("")) {
+                                        Toast.makeText(this, "请完成所有输入再登录", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        OkGo.<String>post(url).tag(this)
+                                                .params("mobile", phoneNB)
+                                                .params("smsCode", verification)
+                                                .execute(new StringCallback() {
+                                                    @Override
+                                                    public void onSuccess(Response<String> response) {
+                                                        gson = new Gson();
+                                                        baseBean = gson.fromJson(response.body(), BaseBean.class);
+                                                        selectionState(baseBean.getCode());
+                                                    }
+                                                });
+                                    }
 
-                                break;
+                                    break;
+                            }
+                        }else {
+                            Toast.makeText(LoginActivity.this, "昵称长度不符", Toast.LENGTH_SHORT).show();
                         }
+
                     }
                 }
                 break;
@@ -227,9 +220,13 @@ public class LoginActivity extends AppCompatActivity {
     private void selectionState(int code) {
         switch (code) {
             case 10000:
-                sharedPreferencesHelper.put("token", baseBean.getObject().toString());
-                Log.e(TAG, "token: " + baseBean.getObject());
-                Toast.makeText(LoginActivity.this, "发送成功", Toast.LENGTH_SHORT).show();
+                SharedPreferences userInfo = getSharedPreferences("loginToken", MODE_PRIVATE);
+                SharedPreferences.Editor editor = userInfo.edit();//获取Editor //得到Editor后，写入需要保存的数据
+//                editor.remove("token");
+                editor.putString("token",  baseBean.getObject().toString());
+                editor.commit();//提交修改
+                Log.i(TAG, "token: " + baseBean.getObject());
+//                Toast.makeText(LoginActivity.this, "发送成功", Toast.LENGTH_SHORT).show();
                 intent = new Intent(this, MainActivity.class);
                 finish();
                 startActivity(intent);
@@ -286,4 +283,15 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
 }

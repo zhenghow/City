@@ -69,7 +69,7 @@
 
         <RadioButton
             android:id="@+id/rb_base"
-            android:text="基地"
+            android:text="城市寻宝"
             android:drawableTop="@drawable/selected_base"
             style="@style/RadioGroupButtonStyle"
             android:textColor="@drawable/color_radiobutton"/>
@@ -83,7 +83,7 @@
 
         <RadioButton
             android:id="@+id/rb_my"
-            android:text="我的"
+            android:text="我的家园"
             android:textColor="@drawable/color_radiobutton"
             android:drawableTop="@drawable/selected_mine"
             style="@style/RadioGroupButtonStyle" />

@@ -1,5 +1,6 @@
 package com.example.edz.myapplication.utile;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -105,5 +106,39 @@ public class RegexUtils {
         return string.matches(PASSWORD_REGEX);
     }
 
+    /*
+         * 统计字符串真实：长度中文占2字符，英文占1字符
+         */
+    public static boolean strRealLength(String value) {
+
+        int valueLength = 0;
+        String chinese = "[\u4e00-\u9fa5]";
+        for (int i = 0; i < value.length(); i++) {
+            String temp = value.substring(i, i + 1);
+            if (temp.matches(chinese)) {
+                valueLength += 2;
+            } else {
+                valueLength += 1;
+            }
+        }
+        if (valueLength<=10){
+            return true;
+        }
+
+        return false;
+    }
+
+    /*
+         * 手机号验证
+         */
+    public static boolean isMobile(String str) {
+        Pattern p = null;
+        Matcher m = null;
+        boolean b = false;
+        p = Pattern.compile("^[1][3,4,5,7,8][0-9]{9}$"); // 验证手机号
+        m = p.matcher(str);
+        b = m.matches();
+        return b;
+    }
 
 }

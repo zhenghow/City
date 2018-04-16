@@ -1,10 +1,18 @@
 package com.example.edz.myapplication.activity;
 
 
+import android.Manifest;
+import android.annotation.TargetApi;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +23,14 @@ import android.widget.Toast;
 import com.example.edz.myapplication.R;
 import com.example.edz.myapplication.fragment.BaseFragment;
 import com.example.edz.myapplication.fragment.MyFragment;
+import com.example.edz.myapplication.utile.SharedPreferencesHelper;
+import com.umeng.analytics.MobclickAgent;
+
+import java.lang.reflect.Method;
+import java.net.NetworkInterface;
+import java.util.Enumeration;
+import java.util.Locale;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -41,6 +57,10 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        SharedPreferencesHelper sharedPreferencesHelper = new SharedPreferencesHelper(this, "loginToken");
+        String token = sharedPreferencesHelper.getString("token", null);
+        MobclickAgent.onProfileSignIn(token);
+
 
         baseFragment=new BaseFragment();
         myFragment=new MyFragment();
@@ -131,5 +151,21 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         rbBase.setChecked(true);
         mRadioGroup.setOnCheckedChangeListener(this);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
+
+
 
 }

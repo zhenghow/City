@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.edz.myapplication.R;
 import com.example.edz.myapplication.utile.JsHelper;
 import com.example.edz.myapplication.utile.WebViewUtil;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -75,14 +76,25 @@ public class Web2Activity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.button_reload:
+                Log.i(TAG, "onViewClicked: web_error");
+                webError.setVisibility(View.GONE);
                 initWeb();
+                webViewWeb2.setVisibility(View.VISIBLE);
                 break;
         }
     }
+
 
     @Override
     protected void onResume() {
         super.onResume();
         initWeb();
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }
