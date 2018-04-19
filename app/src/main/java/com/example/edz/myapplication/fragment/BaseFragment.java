@@ -48,6 +48,7 @@ public class BaseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_base, container, false);
         ButterKnife.bind(this, view);
+        webView.setVisibility(View.VISIBLE);
         initView();
 
         return view;
@@ -97,6 +98,7 @@ public class BaseFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+//        WebViewUtil.write("***basefragment****"+String.valueOf(webView.getVisibility())+"##"+String.valueOf(webError.getVisibility()));
         MobclickAgent.onPageEnd(TAG);
     }
 }

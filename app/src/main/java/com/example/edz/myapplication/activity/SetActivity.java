@@ -74,6 +74,8 @@ public class SetActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        //长按复制QQ群号
         layoutTellSetting.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -149,15 +151,12 @@ public class SetActivity extends AppCompatActivity {
                 SharedPreferences userInfo = getSharedPreferences("loginToken", MODE_PRIVATE);
                 SharedPreferences.Editor editor = userInfo.edit();//获取Editor //得到Editor后，写入需要保存的数据
                 editor.remove("token");
-//                editor.putString("token", "");
                 editor.commit();//提交修改
                 Log.i(TAG, "保存用户信息成功");
-
 
                 Intent intent = new Intent(this, LoginActivity.class);
                 intent.putExtra("type", "1");
                 startActivity(intent);
-
 
                 finish();
                 break;

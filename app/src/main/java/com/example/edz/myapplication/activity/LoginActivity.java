@@ -113,7 +113,6 @@ public class LoginActivity extends AppCompatActivity {
                     OkGo.<String>post(Urls.Url_smscode).tag(this)
                             .params("mobile", phoneNB)
                             .execute(new StringCallback() {
-
                                 @Override
                                 public void onSuccess(Response<String> response) {
                                     gson = new Gson();
@@ -188,7 +187,7 @@ public class LoginActivity extends AppCompatActivity {
                                     break;
                             }
                         }else {
-                            Toast.makeText(LoginActivity.this, "昵称长度不符", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "昵称格式不符", Toast.LENGTH_SHORT).show();
                         }
 
                     }

@@ -14,6 +14,13 @@ import com.example.edz.myapplication.activity.LoginActivity;
 import com.example.edz.myapplication.activity.Web2Activity;
 import com.example.edz.myapplication.activity.WebActivity;
 import com.example.edz.myapplication.activity.WebThirdActivity;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.FileCallback;
+import com.lzy.okgo.model.Progress;
+import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
+
+import java.io.File;
 
 /**
  * Created by EDZ on 2018/3/29.
@@ -98,6 +105,35 @@ public class JsHelper {
         intent.putExtra("type", "0");
         context.startActivity(intent);
     }
+    /**
+     *
+     * 游戏下载
+     */
+    @JavascriptInterface
+    public static void downloadGame(String url) {
 
+        OkGo.<File>get(url).tag(context)
+                .execute(new FileCallback() {
+                    @Override
+                    public void onStart(Request<File, ? extends Request> request) {
+                        super.onStart(request);
 
+//                        textView.setText("开始");
+                    }
+
+                    @Override
+                    public void onSuccess(Response<File> response) {
+
+//                        textView.setText("下载完成");
+                    }
+
+                    @Override
+                    public void downloadProgress(Progress progress) {
+                        super.downloadProgress(progress);
+                        float f1 = (float) (Math.round(progress.fraction * 100)) / 100;
+
+//                        textView.setText(progress.fraction * 100 + "%");
+                    }
+                });
+    }
 }

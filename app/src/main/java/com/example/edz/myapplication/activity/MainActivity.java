@@ -57,7 +57,9 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
         SharedPreferencesHelper sharedPreferencesHelper = new SharedPreferencesHelper(this, "loginToken");
+
         String token = sharedPreferencesHelper.getString("token", null);
         MobclickAgent.onProfileSignIn(token);
 

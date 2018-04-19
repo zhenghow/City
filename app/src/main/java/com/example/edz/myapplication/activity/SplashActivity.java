@@ -93,7 +93,11 @@ public class SplashActivity extends AppCompatActivity {
                             versionMax = versionBean.getObject().getVersionMax();
                             versionMin = versionBean.getObject().getVersionMin();
 
-                            Log.e(TAG, "onRequestVersionSuccess: " + versionBean.toString());
+                            try {
+                                Log.e(TAG, "onRequestVersionSuccess: " + versionMin+"****"+compareVersion(getVersionName(), versionMax));
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
 
                             try {
                                 // 0代表相等，1代表version1大于version2，-1代表version1小于version2
@@ -105,6 +109,7 @@ public class SplashActivity extends AppCompatActivity {
                                         initView();
                                         break;
                                     case -1://提示更新
+                                        Log.e(TAG, "sdfsdfsdfsd: " + compareVersion(getVersionName(), versionMin));
                                         switch (compareVersion(getVersionName(), versionMin)) {
                                             case 0://强制更新
                                                 builder.setForceUpdateListener(new ForceUpdateListener() {
@@ -117,7 +122,8 @@ public class SplashActivity extends AppCompatActivity {
                                             case 1://需要更新
                                                 initView();
                                                 return crateUIData();
-                                            case -1://不会出现
+                                            case -1:
+                                                initView();
                                                 break;
                                         }
                                         break;
