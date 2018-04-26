@@ -1,8 +1,8 @@
 package com.example.edz.myapplication.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +14,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.example.edz.myapplication.R;
+import com.example.edz.myapplication.activity.WebActivity;
 import com.example.edz.myapplication.utile.JsHelper;
 import com.example.edz.myapplication.utile.SharedPreferencesHelper;
 import com.example.edz.myapplication.utile.Urls;
@@ -37,6 +38,7 @@ public class BaseFragment extends Fragment {
     Button buttonReload;
     @Bind(R.id.web_error)
     LinearLayout webError;
+
     private String TAG = "BaseFragment";
 
     public BaseFragment() {
@@ -57,7 +59,7 @@ public class BaseFragment extends Fragment {
     private void initView() {
         WebSettings webSettings = webView.getSettings();
         WebViewUtil webViewUtil = new WebViewUtil(getActivity());
-        webView.setBackgroundColor(0);
+
         //调用JS
         webView.addJavascriptInterface(new JsHelper(getActivity()), "hello");
 
@@ -65,13 +67,17 @@ public class BaseFragment extends Fragment {
 
         SharedPreferencesHelper sharedPreferencesHelper = new SharedPreferencesHelper(getActivity(), "loginToken");
         String token = sharedPreferencesHelper.getString("token", null);
-        Log.i(TAG, "token: ==" + token);
+
         //设置缓存
         webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
+
         String url = Urls.Url_webBase + "token=" + token;
-        Log.i(TAG, "url: "+url);
+
         //加载URL
         webView.loadUrl(url);
+
+        Log.i(TAG, "token: ==" + token);
+        Log.i(TAG, "url: " + url);
     }
 
 
@@ -98,7 +104,8 @@ public class BaseFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-//        WebViewUtil.write("***basefragment****"+String.valueOf(webView.getVisibility())+"##"+String.valueOf(webError.getVisibility()));
         MobclickAgent.onPageEnd(TAG);
     }
+
+
 }

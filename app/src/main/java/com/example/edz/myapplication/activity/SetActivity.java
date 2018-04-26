@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.edz.myapplication.R;
 import com.example.edz.myapplication.bean.SettingBean;
+import com.example.edz.myapplication.global.BaseActivity;
 import com.example.edz.myapplication.utile.SharedPreferencesHelper;
 import com.example.edz.myapplication.utile.Urls;
 import com.google.gson.Gson;
@@ -30,7 +31,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SetActivity extends AppCompatActivity {
+public class SetActivity extends BaseActivity {
 
     private final String TAG = "SetActivity";
     @Bind(R.id.img_finish)

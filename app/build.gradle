@@ -6,11 +6,26 @@ android {
         applicationId "com.example.edz.myapplication"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 2
-        versionName "1.0.1"
+//        versionCode 3
+//        versionName "1.0.2"
+        versionCode 3
+        versionName "1.0.2"
+
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
     }
+//    signingConfigs {
+//
+//        myConfig {
+//            storeFile file("cityChain.jks")//签名文件路径
+//            storePassword "zheng142536"
+//            keyAlias "keyfirst"
+//            keyPassword "zheng142536"  //签名密码
+//            println("====== signingConfigs.release ======")
+//
+//        }
+//    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -26,7 +41,17 @@ android {
             appName = parent.name
         }
         variant.outputs.all { output ->
-            outputFileName = "CITY_${buildTime()}_外.apk"
+//            outputFileName = "CITY_${buildTime()}_83测.apk"
+            outputFileName = "CITY_${buildTime()}_内.apk"
+
+//            outputFileName = "CITY_"+versionName+"外.apk"
+//            outputFileName = "CITY_"+versionName+"华为.apk"
+//            outputFileName = "CITY_"+versionName+"oppo.apk"
+//            outputFileName = "CITY_"+versionName+"vivo.apk"
+//            outputFileName = "CITY_"+versionName+"flyme.apk"
+//            outputFileName = "CITY_"+versionName+"小米.apk"
+//            outputFileName = "CITY_"+versionName+"腾讯.apk"
+//            outputFileName = "CITY_"+versionName+"百度.apk"
         }
     }
 }
@@ -45,10 +70,16 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    compile 'com.jakewharton:butterknife:7.0.1'
-    compile 'com.lzy.net:okgo:3.0.4'
-    compile 'com.google.code.gson:gson:2.8.2'
-    compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.allenliu.versionchecklib:library:2.0.3'
-    compile 'com.umeng.analytics:analytics:latest.integration'
+    compile 'com.jakewharton:butterknife:7.0.1'//butterknife
+    compile 'com.lzy.net:okgo:3.0.4'//okgo
+    compile 'com.google.code.gson:gson:2.8.2'//gson
+    compile 'com.github.bumptech.glide:glide:3.7.0'//glide图片库
+    compile 'com.allenliu.versionchecklib:library:2.0.3'//版本检测更新库
+    compile 'com.umeng.analytics:analytics:latest.integration'//统计SDK必须依赖基础组件库。所以需要加入对应依赖:
+    compile 'com.umeng.sdk:common:1.5.0'//PushSDK必须依赖基础组件库，所以需要加入对应依赖
+    compile 'com.umeng.sdk:utdid:1.1.5.3'//PushSDK必须依赖utdid库，所以需要加入对应依赖
+    compile 'com.umeng.sdk:push:4.1.0'//PushSDK
+    compile 'com.umeng.sdk:push-huawei:1.0.0'//华为Push通道
+    compile 'com.umeng.sdk:push-xiaomi:1.0.0' //小米Push通道
+    compile 'com.umeng.sdk:push-meizu:1.0.0' //魅族Push通道
 }

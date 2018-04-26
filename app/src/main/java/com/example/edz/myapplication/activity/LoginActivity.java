@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.edz.myapplication.R;
 import com.example.edz.myapplication.bean.BaseBean;
+import com.example.edz.myapplication.global.BaseActivity;
 import com.example.edz.myapplication.utile.CountDownTimerUtils;
 import com.example.edz.myapplication.utile.RegexUtils;
 import com.example.edz.myapplication.utile.SharedPreferencesHelper;
@@ -29,7 +30,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
+
     private final String TAG = "LoginActivity";
     @Bind(R.id.text_smscode)
     TextView textsmsCode;
@@ -45,7 +47,6 @@ public class LoginActivity extends AppCompatActivity {
     EditText editInvitecode;
     @Bind(R.id.edit_nickname)
     EditText editNickname;
-
     @Bind(R.id.text_protocol)
     TextView textProtocol;
     @Bind(R.id.checkBox)
@@ -100,12 +101,12 @@ public class LoginActivity extends AppCompatActivity {
 //        }
 //    };
 
-    @OnClick({ R.id.text_smscode, R.id.button_login, R.id.text_protocol})
+    @OnClick({R.id.text_smscode, R.id.button_login, R.id.text_protocol})
     public void onViewClicked(View view) {
 
         switch (view.getId()) {
 
-            case R.id.text_smscode:
+            case R.id.text_smscode://发短信
                 geteditData();
                 if (RegexUtils.isMobile(phoneNB)) {
                     mCountDownTimerUtils = new CountDownTimerUtils(textsmsCode, 60000, 1000);
@@ -134,7 +135,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
                 break;
-            case R.id.button_login:
+            case R.id.button_login://登录/注册
                 if (!checkBox.isChecked()) {
                     Toast.makeText(LoginActivity.this, "请勾选服务协议后再登录", Toast.LENGTH_SHORT).show();
                 } else {
@@ -142,9 +143,9 @@ public class LoginActivity extends AppCompatActivity {
                     if (url == null) {
                         Toast.makeText(LoginActivity.this, "请完成所有输入再登录", Toast.LENGTH_SHORT).show();
                     } else {
-                        if(RegexUtils.strRealLength(nickname)){
+                        if (RegexUtils.strRealLength(nickname)) {
                             switch (num) {
-                                case 0:
+                                case 0://注册
                                     Log.e(TAG, "phoneNB:== " + phoneNB + "&&&&&verification===" + verification
                                             + "%%%%%inviteCode==" + inviteCode + "&&&&&&&nickname==" + nickname);
                                     if (phoneNB.equals("") || verification.equals("") || inviteCode.equals("") || nickname.equals("")) {
@@ -166,7 +167,7 @@ public class LoginActivity extends AppCompatActivity {
                                     }
 
                                     break;
-                                case 1:
+                                case 1://登录
                                     Log.e(TAG, "phoneNB:== " + phoneNB + "&&&&&verification===" + verification);
                                     if (phoneNB.equals("") || verification.equals("")) {
                                         Toast.makeText(this, "请完成所有输入再登录", Toast.LENGTH_SHORT).show();
@@ -186,7 +187,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                     break;
                             }
-                        }else {
+                        } else {
                             Toast.makeText(LoginActivity.this, "昵称格式不符", Toast.LENGTH_SHORT).show();
                         }
 
@@ -222,7 +223,7 @@ public class LoginActivity extends AppCompatActivity {
                 SharedPreferences userInfo = getSharedPreferences("loginToken", MODE_PRIVATE);
                 SharedPreferences.Editor editor = userInfo.edit();//获取Editor //得到Editor后，写入需要保存的数据
 //                editor.remove("token");
-                editor.putString("token",  baseBean.getObject().toString());
+                editor.putString("token", baseBean.getObject().toString());
                 editor.commit();//提交修改
                 Log.i(TAG, "token: " + baseBean.getObject());
 //                Toast.makeText(LoginActivity.this, "发送成功", Toast.LENGTH_SHORT).show();

@@ -33,6 +33,7 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
+
     <LinearLayout
         android:id="@+id/web_error"
         android:layout_width="match_parent"

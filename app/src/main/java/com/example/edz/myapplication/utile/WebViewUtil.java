@@ -41,7 +41,8 @@ import java.io.RandomAccessFile;
  */
 
 public class WebViewUtil {
-    public static String weblog1,weblog2,weblog3,weblog4,weblog5,weblog6;
+
+
 
     public static Activity context;
 
@@ -51,9 +52,8 @@ public class WebViewUtil {
 
 
     public static void init(final WebView webView, final FrameLayout loadingLayout, final LinearLayout webError) {
-
-        weblog1="webView&1&&&:"+ String.valueOf(webView.getId()).toString();
-
+       //设置背景色
+        webView.setBackgroundColor(0);
         //屏蔽长按事件
         webView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -61,6 +61,7 @@ public class WebViewUtil {
                 return true;
             }
         });
+        //屏蔽滚动条
         webView.setHorizontalScrollBarEnabled(false);//水平不显示
         webView.setVerticalScrollBarEnabled(false); //垂直不显示
 
@@ -77,6 +78,7 @@ public class WebViewUtil {
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         webSettings.setUseWideViewPort(true); //将图片调整到适合webview的大小
         webSettings.setLoadWithOverviewMode(true);
+        //设置字体相关
         webSettings.setTextZoom(100);
 
 
@@ -109,7 +111,7 @@ public class WebViewUtil {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
-                weblog2="webView&start&"+ "url=" + url;
+
 //                loadingLayout.setVisibility(View.VISIBLE);
 //                webView.setVisibility(View.GONE);
 //                webError.setVisibility(View.GONE);
@@ -119,8 +121,6 @@ public class WebViewUtil {
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
 
-//                String s=weblog1+weblog2+weblog3+weblog4+weblog5+weblog6;
-//                write(s);
                 Log.i("webView&finish&", "url=" + url + "##################################################################################################");
             }
 
@@ -131,34 +131,49 @@ public class WebViewUtil {
 
                 // 断网或者网络连接超时
                 if (errorCode == ERROR_HOST_LOOKUP || errorCode == ERROR_CONNECT || errorCode == ERROR_TIMEOUT) {
-                    weblog3="webViewReceivedError:"+ "errorCode:" + errorCode + "==description:" + description; //网络未连接
-                    view.loadUrl("about:blank"); // 避免出现默认的错误界面
+                    Log.i("weberror", "errorCode: "+errorCode);
+                    view.loadUrl("about:blank"); // 加载空白页，避免出现默认的错误界面
                     webView.setVisibility(View.GONE);
                     webError.setVisibility(View.VISIBLE);
                 }
             }
 
-            @TargetApi(android.os.Build.VERSION_CODES.M)
-            @Override
-            public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
-                super.onReceivedHttpError(view, request, errorResponse);
-
-                // 这个方法在6.0才出现
-                int statusCode = errorResponse.getStatusCode();
-                System.out.println("onReceivedHttpError code = " + statusCode);
-                if (404 == statusCode || 500 == statusCode) {
-                    view.loadUrl("about:blank");// 避免出现默认的错误界面
-                    weblog4="webViewReceHttpError:"+ "request:" + request + "===" + "errorResponse:" + errorResponse.getStatusCode();
-                    webView.setVisibility(View.GONE);
-                    webError.setVisibility(View.VISIBLE);
-                }
-            }
 
 
         });
 
 
         webView.setWebChromeClient(new WebChromeClient() {
+
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+//                webView.setVisibility(View.VISIBLE);
+//                if (newProgress == 100) {
+//                    Log.e(webView.toString(), "222222222");
+//                    webView.setVisibility(View.VISIBLE);
+//                    loadingLayout.setVisibility(View.GONE);
+//                    webError.setVisibility(View.GONE);
+//                }
+            }
+
+
+            @Override
+            public void onReceivedTitle(WebView view, String title) {
+                super.onReceivedTitle(view, title);
+                // android 6.0 以下通过title获取
+                Log.i("weberror", "errortitle: "+title);
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+                    if ( title.contains("500") || title.contains("Error")) {
+                        view.loadUrl("about:blank");// 加载空白页，避免出现默认的错误界面
+
+                        webView.setVisibility(View.GONE);
+                        webError.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+
+            //设置响应js的 Alert()函数
             @Override
             public boolean onJsAlert(WebView view, String url, String message, final JsResult result) {
                 AlertDialog.Builder b = new AlertDialog.Builder(context);
@@ -212,66 +227,9 @@ public class WebViewUtil {
                 return true;
             }
 
-
-            @Override
-            public void onProgressChanged(WebView view, int newProgress) {
-                super.onProgressChanged(view, newProgress);
-
-                weblog5="webView&progress&:"+"onProgressChanged: " + newProgress;
-//                webView.setVisibility(View.VISIBLE);
-//                if (newProgress == 100) {
-//                    Log.e(webView.toString(), "222222222");
-//                    webView.setVisibility(View.VISIBLE);
-//                    loadingLayout.setVisibility(View.GONE);
-//                    webError.setVisibility(View.GONE);
-//                }
-            }
-
-
-            @Override
-            public void onReceivedTitle(WebView view, String title) {
-                super.onReceivedTitle(view, title);
-                // android 6.0 以下通过title获取
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-                    if (title.contains("404") || title.contains("500") || title.contains("Error")) {
-                        view.loadUrl("about:blank");// 避免出现默认的错误界面
-                        weblog6="webViewReceivedTitle"+ "title" + title;
-                        webView.setVisibility(View.GONE);
-                        webError.setVisibility(View.VISIBLE);
-                    }
-                }
-            }
-
-
         });
 
     }
 
 
-
-    public static void write(String content) {
-        try {
-            //判断实际是否有SD卡，且应用程序是否有读写SD卡的能力，有则返回true
-            if (Environment.getExternalStorageState().equals(
-                    Environment.MEDIA_MOUNTED)) {
-                // 获取SD卡的目录
-                File sdCardDir = Environment.getExternalStorageDirectory();
-                String path = "/test/";
-                File dir = new File(sdCardDir + path);
-                if (!dir.exists()) {
-                    dir.mkdirs();
-                }
-                File targetFile = new File(sdCardDir.getCanonicalPath() + path+"city日志.txt");
-                //使用RandomAccessFile是在原有的文件基础之上追加内容，
-                //而使用outputstream则是要先清空内容再写入
-                RandomAccessFile raf = new RandomAccessFile(targetFile, "rw");
-                //光标移到原始文件最后，再执行写入
-                raf.seek(targetFile.length());
-                raf.write(content.getBytes());
-                raf.close();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

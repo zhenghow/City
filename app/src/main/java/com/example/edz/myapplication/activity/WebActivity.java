@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.edz.myapplication.R;
+import com.example.edz.myapplication.global.BaseActivity;
 import com.example.edz.myapplication.utile.JsHelper;
 import com.example.edz.myapplication.utile.WebViewUtil;
 import com.umeng.analytics.MobclickAgent;
@@ -20,7 +21,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class WebActivity extends AppCompatActivity {
+public class WebActivity extends BaseActivity {
 
     private final String TAG = "WebActivity";
     @Bind(R.id.webView_web)

@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.example.edz.myapplication.R;
 import com.example.edz.myapplication.fragment.BaseFragment;
 import com.example.edz.myapplication.fragment.MyFragment;
+import com.example.edz.myapplication.global.BaseActivity;
 import com.example.edz.myapplication.utile.SharedPreferencesHelper;
 import com.umeng.analytics.MobclickAgent;
 
@@ -35,7 +36,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener {
+public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
 
     @Bind(R.id.rb_base)
     RadioButton rbBase;

@@ -3,15 +3,17 @@ package com.example.edz.myapplication.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+
 import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.ImageView;
@@ -25,6 +27,7 @@ import com.allenliu.versionchecklib.v2.callback.ForceUpdateListener;
 import com.allenliu.versionchecklib.v2.callback.RequestVersionListener;
 import com.example.edz.myapplication.R;
 import com.example.edz.myapplication.bean.VersionBean;
+import com.example.edz.myapplication.global.BaseActivity;
 import com.example.edz.myapplication.utile.BitmapHelper;
 import com.example.edz.myapplication.utile.SharedPreferencesHelper;
 import com.example.edz.myapplication.utile.Urls;
@@ -32,13 +35,15 @@ import com.google.gson.Gson;
 import com.umeng.analytics.AnalyticsConfig;
 import com.umeng.analytics.MobclickAgent;
 
+import android.support.v7.app.AppCompatActivity;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static java.lang.Thread.sleep;
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends BaseActivity {
 
     @Bind(R.id.text_time_welcome)
     TextView textTimeWelcome;
@@ -50,7 +55,6 @@ public class SplashActivity extends AppCompatActivity {
     private int time = 3;
     private String userId;
     private Thread thread;
-    private boolean boo = false;
     private DownloadBuilder builder;
     private VersionBean versionBean;
     private String versionMax;
@@ -67,7 +71,7 @@ public class SplashActivity extends AppCompatActivity {
         }
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
-
+//
         MobclickAgent.enableEncrypt(true);
 
 
@@ -75,9 +79,15 @@ public class SplashActivity extends AppCompatActivity {
             appUpData();
         }
 
-
+//        uninstallApk(this,"com.example.edz.myapplication");
     }
 
+    //    /* 卸载apk */
+//    public static void uninstallApk(Context context, String packageName) {
+//        Uri uri = Uri.parse("package:" + packageName);
+//        Intent intent = new Intent(Intent.ACTION_DELETE, uri);
+//        context.startActivity(intent);
+//    }
     private void appUpData() {
         builder = AllenVersionChecker
                 .getInstance()
@@ -92,12 +102,7 @@ public class SplashActivity extends AppCompatActivity {
                         if (versionBean.getCode() == 10000) {
                             versionMax = versionBean.getObject().getVersionMax();
                             versionMin = versionBean.getObject().getVersionMin();
-
-                            try {
-                                Log.e(TAG, "onRequestVersionSuccess: " + versionMin+"****"+compareVersion(getVersionName(), versionMax));
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
+                            Log.i(TAG, "versioncode: "+versionMax+"#####"+versionMin);
 
                             try {
                                 // 0代表相等，1代表version1大于version2，-1代表version1小于version2
@@ -111,7 +116,7 @@ public class SplashActivity extends AppCompatActivity {
                                     case -1://提示更新
                                         Log.e(TAG, "sdfsdfsdfsd: " + compareVersion(getVersionName(), versionMin));
                                         switch (compareVersion(getVersionName(), versionMin)) {
-                                            case 0://强制更新
+                                            case -1://强制更新
                                                 builder.setForceUpdateListener(new ForceUpdateListener() {
                                                     @Override
                                                     public void onShouldForceUpdate() {
@@ -122,7 +127,7 @@ public class SplashActivity extends AppCompatActivity {
                                             case 1://需要更新
                                                 initView();
                                                 return crateUIData();
-                                            case -1:
+                                            case 0:
                                                 initView();
                                                 break;
                                         }
@@ -146,24 +151,31 @@ public class SplashActivity extends AppCompatActivity {
 
 
     private void initView() {
+        /**
+         *自动化测试
+         */
+//        String usertoken ="1a89a9ed944a44bb9bc1b7ff9d8d0b2b6512bd43d9caa6e02c990b0a82652dca9d5ed678fe57bcca610140957afab57145c48cce2e2d7fbdea1afc51c7c6ad26f09564c9ca56850d4cd6b3319e541aeecfcd208495d565ef66e7dff9f98764da";
+//        SharedPreferences userInfo = getSharedPreferences("loginToken", MODE_PRIVATE);
+//        SharedPreferences.Editor editor = userInfo.edit();//获取Editor //得到Editor后，写入需要保存的数据
+//        editor.putString("token", usertoken);
+//        editor.commit();//提交修改
+        /**
+         *
+         */
+
         SharedPreferencesHelper sharedPreferencesHelper = new SharedPreferencesHelper(this, "loginToken");
         String token = sharedPreferencesHelper.getString("token", null);
         Log.e(TAG, "token: " + token);
-        if (boo) {
-            BitmapHelper.displayImage(this, imgWelcome, "http://pic29.photophoto.cn/20131204/0034034499213463_b.jpg");
-            initData();
-        } else {
-            if (token == null) {
-                intent = new Intent(SplashActivity.this, LoginActivity.class);
-                intent.putExtra("type", "0");
-                startActivity(intent);
-                finish();
-            } else {
-                intent = new Intent(SplashActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
 
+        if (token == null) {
+            intent = new Intent(SplashActivity.this, LoginActivity.class);
+            intent.putExtra("type", "0");
+            startActivity(intent);
+            finish();
+        } else {
+            intent = new Intent(SplashActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
         }
     }
 
@@ -300,8 +312,8 @@ public class SplashActivity extends AppCompatActivity {
         PackageManager packageManager = getPackageManager();
         //getPackageName()是你当前类的包名，0代表是获取版本信息
         PackageInfo packInfo = packageManager.getPackageInfo(getPackageName(), 0);
-        Log.e("TAG", "版本号" + packInfo.versionCode);
-        Log.e("TAG", "版本名" + packInfo.versionName);
+        Log.e(TAG, "版本号" + packInfo.versionCode);
+        Log.e(TAG, "版本名" + packInfo.versionName);
 
         return packInfo.versionName;
     }

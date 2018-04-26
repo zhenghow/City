@@ -44,7 +44,7 @@
 
 
     <style name="StartTheme" parent="AppTheme">
-        <item name="android:windowBackground">@drawable/load</item>
+        <item name="android:windowBackground">@drawable/splash</item>
         <item name="windowActionBar">false</item>//取消Actionbar
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>//设置全屏
