@@ -6,25 +6,28 @@ android {
         applicationId "com.example.edz.myapplication"
         minSdkVersion 16
         targetSdkVersion 27
-//        versionCode 3
-//        versionName "1.0.2"
-        versionCode 3
-        versionName "1.0.2"
+
+        //当前服务器版本
+        versionCode 4
+        versionName "1.0.3"
+
+
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
     }
-//    signingConfigs {
+
 //
-//        myConfig {
-//            storeFile file("cityChain.jks")//签名文件路径
+//    signingConfigs {
+//        release {
+//            storeFile file('../cityChain.jks')//签名文件路径
 //            storePassword "zheng142536"
 //            keyAlias "keyfirst"
 //            keyPassword "zheng142536"  //签名密码
 //            println("====== signingConfigs.release ======")
-//
 //        }
 //    }
+
 
     buildTypes {
         release {
@@ -41,10 +44,10 @@ android {
             appName = parent.name
         }
         variant.outputs.all { output ->
-//            outputFileName = "CITY_${buildTime()}_83测.apk"
-            outputFileName = "CITY_${buildTime()}_内.apk"
+//            outputFileName = "CITY_${buildTime()}_测.apk"
+//            outputFileName = "CITY_${buildTime()}_内115.apk"
 
-//            outputFileName = "CITY_"+versionName+"外.apk"
+            outputFileName = "CITY_" + versionName + "官网.apk"
 //            outputFileName = "CITY_"+versionName+"华为.apk"
 //            outputFileName = "CITY_"+versionName+"oppo.apk"
 //            outputFileName = "CITY_"+versionName+"vivo.apk"
@@ -52,6 +55,7 @@ android {
 //            outputFileName = "CITY_"+versionName+"小米.apk"
 //            outputFileName = "CITY_"+versionName+"腾讯.apk"
 //            outputFileName = "CITY_"+versionName+"百度.apk"
+//            outputFileName = "CITY_"+versionName+"360.apk"
         }
     }
 }

@@ -65,15 +65,17 @@ public class BaseFragment extends Fragment {
 
         webViewUtil.init(webView, loadingLayout, webError);
 
+        //获取token
         SharedPreferencesHelper sharedPreferencesHelper = new SharedPreferencesHelper(getActivity(), "loginToken");
         String token = sharedPreferencesHelper.getString("token", null);
 
         //设置缓存
         webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
 
-        String url = Urls.Url_webBase + "token=" + token;
+
 
         //加载URL
+        String url = Urls.Url_webBase + "token=" + token;
         webView.loadUrl(url);
 
         Log.i(TAG, "token: ==" + token);
@@ -106,6 +108,7 @@ public class BaseFragment extends Fragment {
         super.onPause();
         MobclickAgent.onPageEnd(TAG);
     }
+
 
 
 }

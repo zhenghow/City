@@ -52,6 +52,7 @@ public class WebViewUtil {
 
 
     public static void init(final WebView webView, final FrameLayout loadingLayout, final LinearLayout webError) {
+
        //设置背景色
         webView.setBackgroundColor(0);
         //屏蔽长按事件
@@ -87,61 +88,16 @@ public class WebViewUtil {
 
 
         //屏幕回退
-//        webView.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
-//                if ((keyCode == KeyEvent.KEYCODE_BACK) && webView.canGoBack()) {
-//                    webView.goBack();
-//                    return true;
-//                }
-//                return false;
-//            }
-//        });
-
-
-        webView.setWebViewClient(new WebViewClient() {
-            //禁止调用外部浏览器
+        webView.setOnKeyListener(new View.OnKeyListener() {
             @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                Log.i("webView&2&:", String.valueOf(webView.getId()).toString() + "$$url" + url);
-                return true;
-            }
-
-            @Override
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                super.onPageStarted(view, url, favicon);
-
-//                loadingLayout.setVisibility(View.VISIBLE);
-//                webView.setVisibility(View.GONE);
-//                webError.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-
-                Log.i("webView&finish&", "url=" + url + "##################################################################################################");
-            }
-
-
-            @Override
-            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-                super.onReceivedError(view, errorCode, description, failingUrl);
-
-                // 断网或者网络连接超时
-                if (errorCode == ERROR_HOST_LOOKUP || errorCode == ERROR_CONNECT || errorCode == ERROR_TIMEOUT) {
-                    Log.i("weberror", "errorCode: "+errorCode);
-                    view.loadUrl("about:blank"); // 加载空白页，避免出现默认的错误界面
-                    webView.setVisibility(View.GONE);
-                    webError.setVisibility(View.VISIBLE);
+            public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
+                if ((keyCode == KeyEvent.KEYCODE_BACK) && webView.canGoBack()) {
+                    webView.goBack();
+                    return true;
                 }
+                return false;
             }
-
-
-
         });
-
 
         webView.setWebChromeClient(new WebChromeClient() {
 
@@ -228,6 +184,63 @@ public class WebViewUtil {
             }
 
         });
+
+
+
+        webView.setWebViewClient(new WebViewClient() {
+            //禁止调用外部浏览器
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                Log.i("webView&2&:", String.valueOf(webView.getId()).toString() + "$$url" + url);
+                return false;
+            }
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                Log.i("webView&finish&", "url=" + url + "##################################################################################################");
+            }
+
+
+//
+            /**
+             * 会出404
+             * @param view
+             * @param request
+             * @param errorResponse
+             */
+            @TargetApi(android.os.Build.VERSION_CODES.M)
+            @Override
+            public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
+                super.onReceivedHttpError(view, request, errorResponse);
+                // 这个方法在6.0才出现
+                Log.i("weberror", "errorstatusCode: "+errorResponse.getStatusCode());
+            }
+
+
+
+            @Override
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                super.onReceivedError(view, errorCode, description, failingUrl);
+
+                // 断网或者网络连接超时
+                if (errorCode == ERROR_HOST_LOOKUP || errorCode == ERROR_CONNECT || errorCode == ERROR_TIMEOUT) {
+                    Log.i("weberror", "errorCode: "+errorCode);
+                    view.loadUrl("about:blank"); // 加载空白页，避免出现默认的错误界面
+                    webView.setVisibility(View.GONE);
+                    webError.setVisibility(View.VISIBLE);
+                }
+            }
+
+        });
+
 
     }
 

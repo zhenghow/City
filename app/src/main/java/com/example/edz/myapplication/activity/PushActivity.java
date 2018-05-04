@@ -22,6 +22,9 @@ import java.util.Map;
 
 import static anet.channel.util.Utils.context;
 
+/**
+ * 推送Activity
+ */
 public class PushActivity  extends UmengNotifyClickActivity {
     private static String TAG = "PushActivity";
     private Intent intent;

@@ -61,13 +61,13 @@ public class MyFragment extends Fragment {
     }
 
     private void initView() {
-
         WebViewUtil webViewUtil = new WebViewUtil(getActivity());
+
         //调用JS
         webHome.addJavascriptInterface(new JsHelper(getActivity()), "hello");
-
+        //初始化web工具
         webViewUtil.init(webHome, loadingLayout, webError);
-
+        //获取token
         SharedPreferencesHelper sharedPreferencesHelper = new SharedPreferencesHelper(getActivity(), "loginToken");
         String token = sharedPreferencesHelper.getString("token", null);
 
@@ -84,12 +84,12 @@ public class MyFragment extends Fragment {
     @OnClick({R.id.img_set, R.id.button_reload})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.img_set:
+            case R.id.img_set://set设置
                 Intent intent = new Intent(getActivity(), SetActivity.class);
                 intent.putExtra("type", "1");
                 getActivity().startActivity(intent);
                 break;
-            case R.id.button_reload:
+            case R.id.button_reload://重新加载
                 Log.i(TAG, "onViewClicked: web_error");
                 webError.setVisibility(View.GONE);
                 initView();

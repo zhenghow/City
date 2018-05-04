@@ -2,7 +2,6 @@ package com.example.edz.myapplication.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
@@ -36,6 +35,8 @@ public class WebActivity extends BaseActivity {
     Button buttonReload;
     @Bind(R.id.web_error)
     LinearLayout webError;
+    @Bind(R.id.layout_web)
+    LinearLayout layoutWeb;
 
     private String url;
     private String title;
@@ -66,6 +67,7 @@ public class WebActivity extends BaseActivity {
         //调用JS
         webView.addJavascriptInterface(new JsHelper(this), "hello");
 
+        Log.i(TAG, "initWeb: " + url);
         //加载URL
         webView.loadUrl(url);
     }
@@ -99,5 +101,14 @@ public class WebActivity extends BaseActivity {
         MobclickAgent.onPause(this);
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (webView != null) {
+            layoutWeb.removeView(webView);
+            webView.removeAllViews();
+            webView.destroy();
+            webView = null;
+        }
+    }
 }

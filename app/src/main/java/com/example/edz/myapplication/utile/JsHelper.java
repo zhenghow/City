@@ -5,15 +5,14 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
 import android.widget.Toast;
 
 import com.example.edz.myapplication.activity.LoginActivity;
-import com.example.edz.myapplication.activity.Web2Activity;
 import com.example.edz.myapplication.activity.WebActivity;
-import com.example.edz.myapplication.activity.WebThirdActivity;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.FileCallback;
 import com.lzy.okgo.model.Progress;
@@ -51,9 +50,9 @@ public class JsHelper {
 
     @JavascriptInterface
     public static void showSecondActivity(String url, String title) {
-        Log.e("JsHelper", "showActivity:url== " + url);
+        Log.e("JsHelper", "showSecondActivity:url== " + url);
 
-        intent = new Intent(context, Web2Activity.class);
+        intent = new Intent(context, WebActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("title", title);
         bundle.putString("url", url);
@@ -64,26 +63,36 @@ public class JsHelper {
 
     @JavascriptInterface
     public static void showThirdActivity(String url, String title) {
-        Log.e("JsHelper", "showActivity:url== " + url);
+        Log.e("JsHelper", "showThirdActivity:url== " + url);
 
-        intent = new Intent(context, WebThirdActivity.class);
+        intent = new Intent(context, WebActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("title", title);
         bundle.putString("url", url);
         intent.putExtras(bundle);
         context.startActivity(intent);
-
     }
 
+    //咨讯    openBrowser
+    @JavascriptInterface
+    public static void openBrowser(String url) {
+        Log.i("JsHelper", "openBrowser:url== " + url);
+
+        Uri uri = Uri.parse(url);
+        intent = new Intent(Intent.ACTION_VIEW, uri);
+        context.startActivity(intent);
+    }
+
+//    邀请码
     @JavascriptInterface
     public static void onClickCopy(String code, String name) {
         ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
         //创建ClipData对象
         ClipData clipData = ClipData.newPlainText("邀请码",
                 "我是" + name + ",邀请您加入City寻宝，邀请码：" + code + "，我的邀请次数有限，赶快加入哦～ http://www.ocity.io/download.html");
+
         //添加ClipData对象到剪切板中
 //        我是多多，邀请您加入City寻宝，邀请码：GNEJ，我的邀请次数有限，赶快加入哦～ http://140.143.53.254/cityChain.apk
-
         clipboardManager.setPrimaryClip(clipData);
         Toast.makeText(context, "复制成功", Toast.LENGTH_SHORT).show();
     }

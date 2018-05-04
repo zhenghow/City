@@ -49,6 +49,8 @@ public class VersionBean {
 
         private String versionMin;
         private String versionMax;
+        private String updateUrl;
+        private String serverUrl;
 
         public String getVersionMin() {
             return versionMin;
@@ -64,6 +66,23 @@ public class VersionBean {
 
         public void setVersionMax(String versionMax) {
             this.versionMax = versionMax;
+        }
+
+        public void setUpdateUrl(String updateUrl) {
+            this.updateUrl = updateUrl;
+        }
+
+        public void setServerUrl(String serverUrl) {
+            this.serverUrl = serverUrl;
+        }
+
+        public String getUpdateUrl() {
+
+            return updateUrl;
+        }
+
+        public String getServerUrl() {
+            return serverUrl;
         }
     }
 }

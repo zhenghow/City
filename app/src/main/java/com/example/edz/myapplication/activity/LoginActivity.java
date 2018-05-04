@@ -55,9 +55,9 @@ public class LoginActivity extends BaseActivity {
     private BaseBean baseBean;
     private String phoneNB;
     private String verification;
-    private String url;
+    private String url = Urls.Url_Login;
     private Gson gson;
-    private int num;
+    private int num = 1;
     private String inviteCode;
     private String nickname;
     private SharedPreferencesHelper sharedPreferencesHelper;
@@ -136,6 +136,7 @@ public class LoginActivity extends BaseActivity {
 
                 break;
             case R.id.button_login://登录/注册
+                Log.i(TAG, "button_login_onClicked: url" + url + "@@@@@num" + num);
                 if (!checkBox.isChecked()) {
                     Toast.makeText(LoginActivity.this, "请勾选服务协议后再登录", Toast.LENGTH_SHORT).show();
                 } else {
@@ -181,6 +182,7 @@ public class LoginActivity extends BaseActivity {
                                                         gson = new Gson();
                                                         baseBean = gson.fromJson(response.body(), BaseBean.class);
                                                         selectionState(baseBean.getCode());
+                                                        Log.i(TAG, "登录onSuccess: " + url + "@@@@baseBean_Code" + baseBean.getCode());
                                                     }
                                                 });
                                     }
