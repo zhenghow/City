@@ -1,19 +1,25 @@
 package com.example.edz.myapplication.activity;
 
+import android.Manifest;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+
 import com.allenliu.versionchecklib.v2.AllenVersionChecker;
 import com.allenliu.versionchecklib.v2.builder.DownloadBuilder;
 import com.allenliu.versionchecklib.v2.builder.UIData;
@@ -28,6 +34,13 @@ import com.example.edz.myapplication.utile.SharedPreferencesHelper;
 import com.example.edz.myapplication.utile.Urls;
 import com.google.gson.Gson;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -44,11 +57,15 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     Button buttonReload;
     @Bind(R.id.layout_error)
     LinearLayout layoutError;
+    @Bind(R.id.frameLayout)
+    FrameLayout frameLayout;
+
 
     private String TAG = "MainActivity";
     private BaseFragment baseFragment;
     private MyFragment myFragment;
     private String updataUrl;
+    private String versionContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,15 +88,18 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         //添加fragment
         fragmentTransaction.add(R.id.frameLayout, baseFragment);
         //执行
-        fragmentTransaction.commit();
+        fragmentTransaction.commitAllowingStateLoss();
 
         rbBase.setChecked(true);
         mRadioGroup.setOnCheckedChangeListener(this);
 
+        //获取权限
+        initauthority();
         //检查版本更新
         appUpData();
 
     }
+
 
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int checkId) {
@@ -97,7 +117,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                 } else {
                     fragmentTransaction.add(R.id.frameLayout, baseFragment);
                 }
-                fragmentTransaction.commit();
+                fragmentTransaction.commitAllowingStateLoss();
                 break;
             case R.id.rb_my:
                 if (myFragment.isAdded()) {
@@ -108,7 +128,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                 } else {
                     fragmentTransaction.add(R.id.frameLayout, myFragment);
                 }
-                fragmentTransaction.commit();
+                fragmentTransaction.commitAllowingStateLoss();
                 break;
         }
     }
@@ -155,6 +175,13 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         mRadioGroup.setOnCheckedChangeListener(this);
     }
 
+    //获取权限
+    private void initauthority() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            String[] mPermissionList = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.CALL_PHONE, Manifest.permission.READ_LOGS, Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.SET_DEBUG_APP, Manifest.permission.SYSTEM_ALERT_WINDOW, Manifest.permission.GET_ACCOUNTS, Manifest.permission.WRITE_APN_SETTINGS};
+            ActivityCompat.requestPermissions(this, mPermissionList, 123);
+        }
+    }
 
     private DownloadBuilder downloadBuilder;
     private VersionBean versionBean;
@@ -177,8 +204,18 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                             versionMin = versionBean.getObject().getVersionMin();
                             updataUrl = versionBean.getObject().getUpdateUrl();
 
+                            if (TextUtils.isEmpty(updataUrl)) {
+                                versionContent = "感谢使用City!本次更新修复了一些已知Bug，并且添加了一些新的内容。";
+                            } else {
+                                versionContent = versionBean.getObject().getContent();
+                            }
 
-                            Log.i(TAG, "版本更新: " + "versionMax=" + versionMax + "#####  versionMin=" + versionMin);
+
+                            Log.i(TAG, "版本更新: " + "versionMax==" + versionMax
+                                    + "#####  versionMin==" + versionMin
+                                    + "#####  updataUrl==" + updataUrl
+                                    + "#####  updataContent==" + versionContent
+                                    + "#####  "+TextUtils.isEmpty(updataUrl));
 
                             try {
                                 // 0代表相等，1代表version1大于version2，-1代表version1小于version2
@@ -223,6 +260,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
         downloadBuilder.setShowDownloadingDialog(false);//是否显示下载对话框
         downloadBuilder.setShowNotification(true);//是否显示通知栏
+        downloadBuilder.setForceRedownload(true);//下载忽略本地缓存
 //        downloadBuilder.setSilentDownload(true);//静默下载
         downloadBuilder.excuteMission(this);
     }
@@ -296,7 +334,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         UIData uiData = UIData.create();
         uiData.setTitle("发现新版本:" + versionMax);
         uiData.setDownloadUrl(updataUrl);
-        uiData.setContent("感谢使用City!本次更新修复了一些已知Bug，并且添加了一些新的内容。");
+        uiData.setContent(versionContent);
         return uiData;
     }
 

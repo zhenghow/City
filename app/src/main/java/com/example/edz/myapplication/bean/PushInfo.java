@@ -4,6 +4,8 @@ import java.util.List;
 
 /**
  * Created by EDZ on 2018/4/25.
+ *
+ * 友盟推送 基类
  */
 
 public class PushInfo {

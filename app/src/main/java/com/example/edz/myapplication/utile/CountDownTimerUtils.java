@@ -7,10 +7,9 @@ import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.widget.TextView;
 
-import com.example.edz.myapplication.R;
-
 /**
  * Created by EDZ on 2018/3/27.
+ * 登陆页，倒计时工具
  */
 
 public class CountDownTimerUtils extends CountDownTimer {

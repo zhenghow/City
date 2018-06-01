@@ -3,7 +3,6 @@ package com.example.edz.myapplication.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -30,6 +29,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 注册与登陆页面
+ */
 public class LoginActivity extends BaseActivity {
 
     private final String TAG = "LoginActivity";

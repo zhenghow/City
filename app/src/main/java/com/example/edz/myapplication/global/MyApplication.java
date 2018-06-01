@@ -8,11 +8,10 @@ import com.lzy.okgo.OkGo;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
+import com.umeng.socialize.PlatformConfig;
 
 import org.android.agoo.huawei.HuaWeiRegister;
 import org.android.agoo.xiaomi.MiPushRegistar;
-
-import static anet.channel.util.Utils.context;
 
 /**
  * Created by EDZ on 2018/3/27.
@@ -39,6 +38,17 @@ public class MyApplication extends Application {
 
         //初始化push推送
         initPush();
+
+        //初始化分享
+        initShare();
+    }
+
+    /**
+     * 分享
+     */
+    private void initShare() {
+//        UMConfigure.init(this,"5ad40be7b27b0a0edb0000ad","umeng",UMConfigure.DEVICE_TYPE_PHONE,"");
+        PlatformConfig.setWeixin("wx58712489bc3fa241", "28b11d7d181d0712dfa9aa9d987ce18f");
     }
 
     /**

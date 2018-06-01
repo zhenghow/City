@@ -1,7 +1,6 @@
 package com.example.edz.myapplication.utile;
 
 import android.app.Activity;
-import android.util.Log;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;

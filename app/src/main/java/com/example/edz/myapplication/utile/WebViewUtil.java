@@ -2,39 +2,25 @@ package com.example.edz.myapplication.utile;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
-import android.os.Build;
-import android.os.Environment;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v7.app.AlertDialog;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.JsPromptResult;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
-import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.edz.myapplication.R;
-
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.RandomAccessFile;
 
 /**
  * Created by EDZ on 2018/4/2.
@@ -43,7 +29,7 @@ import java.io.RandomAccessFile;
 public class WebViewUtil {
 
 
-
+    public static final String TAG = "WebViewUtil";
     public static Activity context;
 
     public WebViewUtil(Activity context) {
@@ -53,7 +39,7 @@ public class WebViewUtil {
 
     public static void init(final WebView webView, final FrameLayout loadingLayout, final LinearLayout webError) {
 
-       //设置背景色
+        //设置背景色
         webView.setBackgroundColor(0);
         //屏蔽长按事件
         webView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -95,6 +81,7 @@ public class WebViewUtil {
                     webView.goBack();
                     return true;
                 }
+//                context.finish();
                 return false;
             }
         });
@@ -118,15 +105,15 @@ public class WebViewUtil {
             public void onReceivedTitle(WebView view, String title) {
                 super.onReceivedTitle(view, title);
                 // android 6.0 以下通过title获取
-                Log.i("weberror", "errortitle: "+title);
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-                    if ( title.contains("500") || title.contains("Error")) {
-                        view.loadUrl("about:blank");// 加载空白页，避免出现默认的错误界面
-
-                        webView.setVisibility(View.GONE);
-                        webError.setVisibility(View.VISIBLE);
-                    }
-                }
+//                Log.i("weberror", "errortitle: "+title);
+//                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+//                    if ( title.contains("500") || title.contains("Error")) {
+//                        view.loadUrl("about:blank");// 加载空白页，避免出现默认的错误界面
+//
+//                        webView.setVisibility(View.GONE);
+//                        webError.setVisibility(View.VISIBLE);
+//                    }
+//                }
             }
 
             //设置响应js的 Alert()函数
@@ -186,7 +173,6 @@ public class WebViewUtil {
         });
 
 
-
         webView.setWebViewClient(new WebViewClient() {
             //禁止调用外部浏览器
             @Override
@@ -210,6 +196,7 @@ public class WebViewUtil {
 
 
 //
+
             /**
              * 会出404
              * @param view
@@ -221,9 +208,8 @@ public class WebViewUtil {
             public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
                 super.onReceivedHttpError(view, request, errorResponse);
                 // 这个方法在6.0才出现
-                Log.i("weberror", "errorstatusCode: "+errorResponse.getStatusCode());
+                Log.i("weberror", "errorstatusCode: " + errorResponse.getStatusCode());
             }
-
 
 
             @Override
@@ -232,7 +218,7 @@ public class WebViewUtil {
 
                 // 断网或者网络连接超时
                 if (errorCode == ERROR_HOST_LOOKUP || errorCode == ERROR_CONNECT || errorCode == ERROR_TIMEOUT) {
-                    Log.i("weberror", "errorCode: "+errorCode);
+                    Log.i("weberror", "errorCode: " + errorCode);
                     view.loadUrl("about:blank"); // 加载空白页，避免出现默认的错误界面
                     webView.setVisibility(View.GONE);
                     webError.setVisibility(View.VISIBLE);
@@ -240,7 +226,6 @@ public class WebViewUtil {
             }
 
         });
-
 
     }
 

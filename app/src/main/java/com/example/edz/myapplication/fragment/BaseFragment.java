@@ -1,6 +1,5 @@
 package com.example.edz.myapplication.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -14,7 +13,6 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.example.edz.myapplication.R;
-import com.example.edz.myapplication.activity.WebActivity;
 import com.example.edz.myapplication.utile.JsHelper;
 import com.example.edz.myapplication.utile.SharedPreferencesHelper;
 import com.example.edz.myapplication.utile.Urls;
@@ -57,7 +55,7 @@ public class BaseFragment extends Fragment {
     }
 
     private void initView() {
-        WebSettings webSettings = webView.getSettings();
+
         WebViewUtil webViewUtil = new WebViewUtil(getActivity());
 
         //调用JS
@@ -68,10 +66,6 @@ public class BaseFragment extends Fragment {
         //获取token
         SharedPreferencesHelper sharedPreferencesHelper = new SharedPreferencesHelper(getActivity(), "loginToken");
         String token = sharedPreferencesHelper.getString("token", null);
-
-        //设置缓存
-        webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
-
 
 
         //加载URL
@@ -109,6 +103,16 @@ public class BaseFragment extends Fragment {
         MobclickAgent.onPageEnd(TAG);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+//        webView.clearCache(true);
+//        webView.clearHistory();
 
+        webView.setWebChromeClient(null);
+        webView.setWebViewClient(null);
+        webView.getSettings().setJavaScriptEnabled(false);
+        webView.clearCache(true);
 
+    }
 }

@@ -1,3 +1,4 @@
+
 apply plugin: 'com.android.application'
 
 android {
@@ -7,10 +8,9 @@ android {
         minSdkVersion 16
         targetSdkVersion 27
 
-        //当前服务器版本
-        versionCode 4
-        versionName "1.0.3"
-
+//        //当前服务器版本
+        versionCode 5
+        versionName "1.0.4"
 
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -27,11 +27,30 @@ android {
 //            println("====== signingConfigs.release ======")
 //        }
 //    }
-
+    signingConfigs {
+        release {
+            storeFile file('cityChain.jks')//签名文件路径
+            storePassword "zheng142536"
+            keyAlias "keyfirst"
+            keyPassword "zheng142536"  //签名密码
+            println("====== signingConfigs.release ======")
+        }
+        debug {
+            storeFile file('cityChain.jks')
+            storePassword "zheng142536"
+            keyAlias "keyfirst"
+            keyPassword "zheng142536"
+        }
+    }
 
     buildTypes {
         release {
             minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+            signingConfig signingConfigs.debug
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -45,12 +64,12 @@ android {
         }
         variant.outputs.all { output ->
 //            outputFileName = "CITY_${buildTime()}_测.apk"
-//            outputFileName = "CITY_${buildTime()}_内115.apk"
+//            outputFileName = "CITY_${buildTime()}_内107.apk"
 
-            outputFileName = "CITY_" + versionName + "官网.apk"
+//            outputFileName = "CITY_" + versionName + "官网.apk"
 //            outputFileName = "CITY_"+versionName+"华为.apk"
 //            outputFileName = "CITY_"+versionName+"oppo.apk"
-//            outputFileName = "CITY_"+versionName+"vivo.apk"
+            outputFileName = "CITY_"+versionName+"vivo.apk"
 //            outputFileName = "CITY_"+versionName+"flyme.apk"
 //            outputFileName = "CITY_"+versionName+"小米.apk"
 //            outputFileName = "CITY_"+versionName+"腾讯.apk"
@@ -74,16 +93,23 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    compile 'com.jakewharton:butterknife:7.0.1'//butterknife
-    compile 'com.lzy.net:okgo:3.0.4'//okgo
-    compile 'com.google.code.gson:gson:2.8.2'//gson
-    compile 'com.github.bumptech.glide:glide:3.7.0'//glide图片库
-    compile 'com.allenliu.versionchecklib:library:2.0.3'//版本检测更新库
-    compile 'com.umeng.analytics:analytics:latest.integration'//统计SDK必须依赖基础组件库。所以需要加入对应依赖:
-    compile 'com.umeng.sdk:common:1.5.0'//PushSDK必须依赖基础组件库，所以需要加入对应依赖
-    compile 'com.umeng.sdk:utdid:1.1.5.3'//PushSDK必须依赖utdid库，所以需要加入对应依赖
-    compile 'com.umeng.sdk:push:4.1.0'//PushSDK
-    compile 'com.umeng.sdk:push-huawei:1.0.0'//华为Push通道
-    compile 'com.umeng.sdk:push-xiaomi:1.0.0' //小米Push通道
-    compile 'com.umeng.sdk:push-meizu:1.0.0' //魅族Push通道
+    api 'com.jakewharton:butterknife:7.0.1'//butterknife
+    api 'com.lzy.net:okgo:3.0.4'//okgo
+    api "com.android.support:recyclerview-v7:27.1.0"
+    api 'com.lzy.net:okserver:2.0.5'//okdownload
+    api 'com.google.code.gson:gson:2.8.2'//gson
+    api 'com.github.bumptech.glide:glide:3.7.0'//glide图片库
+    api 'com.allenliu.versionchecklib:library:2.0.3'//版本检测更新库
+    api 'com.umeng.analytics:analytics:latest.integration'//统计SDK必须依赖基础组件库。所以需要加入对应依赖:
+    api 'com.umeng.sdk:common:1.5.0'//PushSDK必须依赖基础组件库，所以需要加入对应依赖
+    api 'com.umeng.sdk:utdid:1.1.5.3'//PushSDK必须依赖utdid库，所以需要加入对应依赖
+    api 'com.umeng.sdk:push:4.1.0'//PushSDK
+    api 'com.umeng.sdk:push-huawei:1.0.0'//华为Push通道
+    api 'com.umeng.sdk:push-xiaomi:1.0.0' //小米Push通道
+    api 'com.umeng.sdk:push-meizu:1.0.0' //魅族Push通道
+
+    api 'com.umeng.sdk:share-core:latest.integration'//友盟分享
+    api 'com.umeng.sdk:share-wechat:latest.integration'//微信分享
+    api 'com.umeng.sdk:shareboard-widget:latest.integration'
+
 }

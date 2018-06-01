@@ -2,18 +2,13 @@ package com.example.edz.myapplication.fragment;
 
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -25,12 +20,11 @@ import com.example.edz.myapplication.utile.JsHelper;
 import com.example.edz.myapplication.utile.SharedPreferencesHelper;
 import com.example.edz.myapplication.utile.Urls;
 import com.example.edz.myapplication.utile.WebViewUtil;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static android.content.Context.MODE_PRIVATE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -101,6 +95,12 @@ public class MyFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        initView();
+        MobclickAgent.onPageStart(TAG);
     }
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG);
+    }
+
 }

@@ -2,6 +2,9 @@ package com.example.edz.myapplication.bean;
 
 /**
  * Created by EDZ on 2018/4/3.
+ *
+ * 设置页，数据基类
+ *
  */
 
 public class SettingBean {

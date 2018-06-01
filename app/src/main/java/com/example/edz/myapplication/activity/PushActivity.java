@@ -8,10 +8,8 @@ import android.os.Message;
 import android.util.Log;
 
 import com.example.edz.myapplication.R;
-import com.example.edz.myapplication.bean.PushInfo;
 import com.example.edz.myapplication.utile.SharedPreferencesHelper;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UmengNotifyClickActivity;
 import com.umeng.message.entity.UMessage;

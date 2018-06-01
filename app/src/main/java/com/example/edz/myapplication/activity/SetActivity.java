@@ -6,10 +6,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -19,7 +21,6 @@ import android.widget.Toast;
 import com.example.edz.myapplication.R;
 import com.example.edz.myapplication.bean.SettingBean;
 import com.example.edz.myapplication.global.BaseActivity;
-import com.example.edz.myapplication.utile.SharedPreferencesHelper;
 import com.example.edz.myapplication.utile.Urls;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
@@ -31,6 +32,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 设置页面
+ */
 public class SetActivity extends BaseActivity {
 
     private final String TAG = "SetActivity";
@@ -153,7 +157,22 @@ public class SetActivity extends BaseActivity {
                 SharedPreferences.Editor editor = userInfo.edit();//获取Editor //得到Editor后，写入需要保存的数据
                 editor.remove("token");
                 editor.commit();//提交修改
-                Log.i(TAG, "保存用户信息成功");
+                Log.i(TAG, "保存用户信息成功" + userInfo.getString("loginToken", null));
+
+                // 清除cookie即可彻底清除缓存
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    CookieManager cookieManager = CookieManager.getInstance();
+                    cookieManager.setAcceptCookie(true);
+                    cookieManager.removeSessionCookie();
+                    cookieManager.removeAllCookie();
+                } else {
+                    CookieSyncManager.createInstance(this);
+                    CookieManager.getInstance().removeAllCookie();
+                    CookieManager.getInstance().removeSessionCookie();
+                    CookieSyncManager.getInstance().sync();
+                    CookieSyncManager.getInstance().startSync();
+                }
+
 
                 Intent intent = new Intent(this, LoginActivity.class);
                 intent.putExtra("type", "1");

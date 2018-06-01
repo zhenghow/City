@@ -9,4 +9,8 @@
     <color name="colorGray">#666666</color>
     <color name="game_details_rb_normal">#666</color>
     <color name="color">#00000000</color>
+
+
+
+    <color name="textcolor">#12CDB0</color>
 </resources>

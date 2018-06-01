@@ -1,9 +1,12 @@
 package com.example.edz.myapplication.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -15,11 +18,16 @@ import com.example.edz.myapplication.global.BaseActivity;
 import com.example.edz.myapplication.utile.JsHelper;
 import com.example.edz.myapplication.utile.WebViewUtil;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.socialize.UMShareAPI;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ *
+ * 通用WebView
+ */
 public class WebActivity extends BaseActivity {
 
     private final String TAG = "WebActivity";
@@ -104,6 +112,7 @@ public class WebActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        UMShareAPI.get(this).release();
         if (webView != null) {
             layoutWeb.removeView(webView);
             webView.removeAllViews();

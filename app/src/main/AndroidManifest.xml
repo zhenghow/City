@@ -2,33 +2,36 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.edz.myapplication">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />  <!--检测联网方式，区分用户设备使用的是2G、3G或是WiFi-->
-    <uses-permission android:name="android.permission.INTERNET" />    <!--允许应用程序联网-->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /><!--获取用户设备的mac地址，在平板设备上，无法通过imei标示设备，我们会将mac地址作为用户的唯一标识-->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />    <!--获取用户设备的IMEI，通过IMEI和mac来唯一的标识用户。-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 检测联网方式，区分用户设备使用的是2G、3G或是WiFi -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 允许应用程序联网 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 获取用户设备的mac地址，在平板设备上，无法通过imei标示设备，我们会将mac地址作为用户的唯一标识 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
-
+    <!--android:roundIcon="@drawable/logo"-->
+    <!-- 获取用户设备的IMEI，通过IMEI和mac来唯一的标识用户。 -->
     <application
         android:name=".global.MyApplication"
         android:icon="@drawable/logo"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/logo"
+
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="5ad40be7b27b0a0edb0000ad" />
-
-
-        <meta-data android:name="UMENG_CHANNEL" android:value="City运营" />
-        <!--<meta-data android:name="UMENG_CHANNEL" android:value="City华为" />-->
-        <!--<meta-data android:name="UMENG_CHANNEL" android:value="CityOPPO" />-->
-        <!--<meta-data android:name="UMENG_CHANNEL" android:value="CityVIVO" />-->
-        <!--<meta-data android:name="UMENG_CHANNEL" android:value="CityFlyme" />-->
-        <!--<meta-data android:name="UMENG_CHANNEL" android:value="City小米" />-->
-        <!--<meta-data android:name="UMENG_CHANNEL" android:value="City腾讯" />-->
-        <!--<meta-data android:name="UMENG_CHANNEL" android:value="City百度" />-->
-        <!--<meta-data android:name="UMENG_CHANNEL" android:value="City360" />-->
+        <!--<meta-data-->
+            <!--android:name="UMENG_CHANNEL"-->
+            <!--android:value="City运营" />-->
+         <!--<meta-data android:name="UMENG_CHANNEL" android:value="City华为" />-->
+        <!-- <meta-data android:name="UMENG_CHANNEL" android:value="CityOPPO" /> -->
+         <meta-data android:name="UMENG_CHANNEL" android:value="CityVIVO" />
+        <!-- <meta-data android:name="UMENG_CHANNEL" android:value="CityFlyme" /> -->
+         <!--<meta-data android:name="UMENG_CHANNEL" android:value="City小米" />-->
+        <!-- <meta-data android:name="UMENG_CHANNEL" android:value="City腾讯" /> -->
+        <!-- <meta-data android:name="UMENG_CHANNEL" android:value="City百度" /> -->
+        <!-- <meta-data android:name="UMENG_CHANNEL" android:value="City360" /> -->
 
         <activity
             android:name=".activity.MainActivity"
@@ -55,7 +58,20 @@
         <activity
             android:name=".activity.PushActivity"
             android:exported="true"
-            android:launchMode="singleTask"></activity>
+            android:launchMode="singleTask" />
+        <activity android:name=".activity.GameLoadActivity">
+
+        </activity>
+        <activity android:name=".activity.DownloadAllActivity" />
+        <activity android:name=".activity.CommentActivity"></activity>
+
+
+<!--微信分享-->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
     </application>
 
 </manifest>

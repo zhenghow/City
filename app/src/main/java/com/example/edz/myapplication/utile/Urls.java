@@ -9,8 +9,7 @@ public class Urls {
 //    public static final String  URL="http://citychain.niwoa.com";
 
 //    public static final String URL = "http://192.168.0.115";
-//    public static final String URL = "http://192.168.1.107:83";
-//        public static final String URL = "http://697f10a1.ngrok.io";
+//    public static final String URL = "http://192.168.1.107";
 //    public static final String URL = "http://140.143.53.254:83";//测试服务器
     public static final String URL = "http://140.143.53.254";//正式服务器
 

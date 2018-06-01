@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@android:id/background">
+        <shape android:shape="rectangle">
+            <corners android:radius="45dp" />
+            <gradient
+                android:endColor="@color/colorGray"
+                android:startColor="@color/colorGray" />
+        </shape>
+    </item>
+    <item android:id="@android:id/progress">
+        <clip><!--可裁剪对象-->
+            <shape android:shape="rectangle">
+                <corners android:radius="45dp" />
+                <gradient
+                    android:angle="45"
+                    android:endColor="@color/textcolor"
+                    android:startColor="@color/textcolor" />
+            </shape>
+        </clip>
+    </item>
+
+
+</layer-list>
